@@ -1,0 +1,26 @@
+#_The Price of the Coat_
+
+_A man is paid Rs. 24000 plus one coat for one year service. However he left after 9 months and receives Rs. 15000 and a coat.
+
+_Then find the price of the coat._
+
+
+Solution:
+
+- Say _c_ is the price of the coat;
+- The man worked 3/4 of one year, he should receive Rs. 24000*(3/4)+1 coat, i.e. Rs. 18000+1 coat;
+- He actually received Rs 15000+1 coat.
+
+
+```
+function coatprice()
+    for c in 1:50000
+        if 3/4*(24000 + c) == 15000 + c
+            print("The price of the coat is Rs. ", c)
+        end
+    end
+end
+
+> coatprice()
+The price of the coat is Rs. 12000
+```

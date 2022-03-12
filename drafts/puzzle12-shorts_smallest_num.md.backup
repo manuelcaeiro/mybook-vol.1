@@ -1,0 +1,19 @@
+#_Smallest Common Dividend_
+
+_What is the smallest number which when divided by 35 leaves remainder 30 ,when divided by 45 leaves remainder 40 and when divided by 55 leaves remainder 50?_
+
+1. Strict solution:
+
+```
+function smallestCommDiv()
+    for n in 1:10000
+        if n % 35 == 30 && n % 45 == 40 && n % 55 == 50
+            print("The smallest common dividend is ", n)
+            break
+        end
+    end
+end
+
+# > smallestCommDiv()
+# The smallest common dividend is 3460
+```

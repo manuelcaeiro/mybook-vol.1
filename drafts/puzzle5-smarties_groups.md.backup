@@ -1,0 +1,38 @@
+#_Smarties' Groups_
+
+_The Birthday Cake has all gone but there are twelve piles of Smarties left. Each pile is held together by icing so can't be split up. Most of the guests have gone, but Hungry Horace and his two friends want to share out the Smarties equally._
+
+To solve this puzle two previous assumptions must be made:
+
+1. That the twelve groups of smarties are an [arithmetic progression](https://en.wikipedia.org/wiki/Arithmetic_progression#Sum);
+2. That [pairwise addition of terms from opposite ends of the list yielded identical intermediate sums](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss#Anecdotes).
+
+```
+# calculate total number of smarties and divide it by three
+12 * (12 + 1) / 2 = 78   # total
+78 / 3 = 26   # for each friend
+```
+
+```
+# in Julia, create a named tuple naming each group of smarties
+ntuple = namedtuple = (fir=1, sec=2, thi=3, fou=4, fif=5, six=6, sev=7, eig=8, nin=9, ten=10, ele=11, twe=12)
+```
+
+Notice the sum of first (fir) and twelfth (twe) is equal to the sum of eleventh (ele) and second (sec) and so on, and all are equal to 13. And 13 is half of 26 (you got the idea).
+
+```
+function groups(nt)
+    hungryH = nt.twe + nt.fir + nt.ele + nt.sec
+    friend1 = nt.ten + nt.thi + nt.nin + nt.fou
+    friend2 = nt.eig + nt.fif + nt.sev + nt.six
+    println("hungryH got ", nt.twe, "+", nt.fir, "+", nt.ele, "+", nt.sec, "=", hungryH)
+    println("friend1 got ", nt.ten, "+", nt.thi, "+", nt.nin, "+", nt.fou, "=", friend1)
+    println("friend2 got ", nt.eig, "+", nt.fif, "+", nt.sev, "+", nt.six, "=", friend2)
+    end
+    
+# > groups(ntuple)
+# hungryH got 12+1+11+2=26
+# friend1 got 10+3+9+4=26
+# friend2 got 8+5+7+6=26
+```
+

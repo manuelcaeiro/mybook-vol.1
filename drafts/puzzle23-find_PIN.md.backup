@@ -1,0 +1,32 @@
+#_What's the PIN ?_
+
+_She forgot her bank account's PIN, which is a 5 digit number, but luckily she remembered some hints on how to recall it._
+
+_Here are the clues:_
+
+_1. First digit is the square of the second._
+
+_2. The sum of second and third digits is ten._
+
+_3. Fourth digit is equal to the second plus one._
+
+_4. The sum of all the digits is thirty._
+
+_What is the PIN?._
+
+
+Solution:
+
+```
+function findPIN()
+    for num in 10000:99999
+        dgs = reverse(digits(num))
+        if dgs[1] == dgs[2]^2 && dgs[2]+dgs[3] == 10 && dgs[4] == dgs[2]+1 && sum(dgs) == 30
+            print("The PIN is ",num)
+        end
+    end
+end
+
+> findPIN()
+The PIN is 93747
+```

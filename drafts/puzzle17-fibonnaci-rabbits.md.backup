@@ -1,0 +1,45 @@
+#_Fibonacci's Rabbits_
+
+_In this same book [Liber Abaci, 1202] Fbonacci introduces the following problem: "How many rabbits can be produced from a single pair in a year if every ontheach pair begets a new pair, which from the second month on become productive, and no deaths occur? (...)"_
+
+_In the first month we begin with a pair of immature rabbits, and in the second month we still have one pair, but now they are mature. By the third month they have produced a new pair, so there are two pairs, one mature, one immature. By the fourth month the imature pair has become mature and the first pair has produced another immature pai, so there are three pairs, two mature and one immature._
+
+_You can go on if you wish, reasoning out how many pairs of rabbits there will be each month, but I will give you the seriesof numbers right nowand save you the trouble. It is:_
+
+_1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144_
+
+
+```
+function fib(n)
+    a = big(0); b = big(1)
+    if n < 0
+        println("n must be a non negative integer")
+    elseif n == 0
+        return a
+    elseif n == 1
+        return b
+    else
+        for i in 1:n-1
+            c = a + b
+            a = b; b = c
+        end
+        return b
+    end
+end
+
+> fib(-1)
+n must be a non negative integer
+> fib(1)
+1
+> fib(2)
+1
+> fib(3)
+2
+fib(4)
+3
+fib(12)
+144
+# the big() notation on the initial variables allows big values of fib() as result
+fib(128)
+251728825683549488150424261
+```

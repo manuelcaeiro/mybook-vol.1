@@ -1,0 +1,143 @@
+#_Magic Encryption_
+
+_Father Christmas spends 364 days of the year as a taster of Christmas puddings (which is why he is so round and jolly). Recently he came across a Magic Pudding._
+
+_If you eat some of this pudding, the next thing you say comes out in a magic code._
+
+_Father Christmas tried it, liked it, and said:_
+
+_"IP! IP! IP! XIBU B MPWFMZ QVEEJOH! NFSSZ DISJTUNBT BOE B IBQQZ OFX ZFBS UP ZPV BMM!"_
+
+_What did he say?_
+
+_Puzzle Author: Stephen Froggatt_
+
+Previous note: This will be a little long explanation  but I promise it will be worth. :)
+
+1. Have you noticed that when you replace each letter in "IP! IP! IP!" with the previous letter in the alphabet you obtain "OH! OH! OH!"? :) Here's a Julia function to decrypt strictly what Father Christmas said:  
+
+
+```
+function decrypt(text)
+    decrypted = ""
+    for l in text
+        numl = Int(l)
+        if numl in  65:90 || numl in 97:122
+            numl = numl - 1
+            decrypted = decrypted * Char(numl)
+        else
+            decrypted = decrypted * Char(numl)
+        end
+    end
+    return decrypted
+end
+
+# > text = "IP! IP! IP! XIBU B MPWFMZ QVEEJOH! NFSSZ DISJTUNBT BOE B IBQQZ OFX ZFBS UP ZPV BMM!"
+# > decrypt(text)
+# "HO! HO! HO! WHAT A LOVELY PUDDING! MERRY CHRISTMAS AND A HAPPY NEW YEAR TO YOU ALL!"
+```
+
+2. Actually, this way of changing a text by replacing each letter with another letter some fixed number of positions down the alphabet is known as [Caeser cipher](https://en.wikipedia.org/wiki/Caesar_cipher). More fun than just decrypt what Santa said is to be able to encrypt (and decrypt) any text you choose, using only a numeric key from 1 to 25(a). Let's see how it can be easily done:
+
+```
+function csrcipher(text, key)
+    # empty string to take the encrypted text
+    ciphtext = ""
+    for l in text   # pick each letter...
+        # ... and turn it into correspondent number
+        numl = Int(l)
+        # sum key and letter number
+        ciphnuml = numl + key
+        # ascii interval for the 26 capital letters
+        if numl in 65:90    
+            # if the result is bigger than number of letter Z...
+            if ciphnuml > 90	
+                # ... go back to A; it's called rotation
+                rotciphnuml = ciphnuml - 26
+                # rotated encrypted letter into the result string
+                # * is used for concatenation
+                ciphtext = ciphtext * Char(rotciphnuml)
+            else
+                # encrypted letter into the result string
+                ciphtext = ciphtext * Char(ciphnuml)
+            end
+        # ascii interval for 26 lower letters
+        elseif numl in 97:122
+            if ciphnuml > 122
+                rotciphnuml = ciphnuml - 26
+                ciphtext = ciphtext * Char(rotciphnuml)
+            else
+                ciphtext = ciphtext * Char(ciphnuml)
+            end
+        else
+            ciphtext = ciphtext * Char(numl)
+        end
+    end
+    return ciphtext   # the result encrypted text
+end
+
+> text = "Magic Encryption"; key = 13
+> csrcipher(text, key)
+"Zntvp Rapelcgvba"
+```
+
+(a) Try key = 26 and see what happens. :)
+
+Now you will want to decrypt the encrypted text. The function to decrypt the text is very much like the one to encrypt it - with just some small differences.
+
+```
+function csrdcipher(text, key)
+    dciphtext = ""
+    for l in text
+        numl = Int(l)
+        dciphnuml = numl - key
+        if numl in 65:90
+            if dciphnuml < 65
+                rotdciphnuml = dciphnuml + 26
+                dciphtext = dciphtext * Char(rotdciphnuml)
+            else
+                dciphtext = dciphtext * Char(dciphnuml)
+            end
+        elseif numl in 97:122
+            if dciphnuml < 97
+                rotdciphnuml = dciphnuml + 26
+                dciphtext = dciphtext * Char(rotdciphnuml)
+            else
+                dciphtext = dciphtext * Char(dciphnuml)
+            end
+        else
+            dciphtext = dciphtext * Char(numl)
+        end
+    end
+    return dciphtext
+end
+
+> text = "Zntvp Rapelcgvba"; key = 13
+> csrdcipher(text, key)
+"Magic Encryption"
+```
+
+3. Now, if you want to encrypt a text in a language that uses a different alphabet (like Greek or Chinese) or a language that has accented letters (like French or Spanish), the previous code will not work. But Julia language uses [Unicode](https://en.wikipedia.org/wiki/Unicode), which defines more than 144 thousand characters for many, many languages. So, we can write a plain function that allows this same kind of simple encryption/decryption for almost any language, even if without rotation.
+
+```
+function ampcsrcipher(text, key)
+	ciphtext = ""
+    for c in text
+    		numc = Int(c)
+    		ciphnumc = numc + key
+    		ciphtext = ciphtext * Char(ciphnumc)
+    	end
+    	return ciphtext
+end
+
+> ampcsrcipher("Père Noël", 13)
+"]õ\x7fr-[|øy"
+> ampcsrcipher("]õ\x7fr-[|øy", -13)
+"Père Noël"
+> ampcsrcipher("Άι Βασίλη", 14)
+"Δχ.Ποϑνωυ"
+> ampcsrcipher("Δχ.Ποϑνωυ", -14)
+"Άι Βασίλη"
+```
+
+As you can see, to decrypt the encrypted text you just use the same function and the key with the opposite sign.

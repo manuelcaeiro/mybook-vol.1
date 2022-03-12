@@ -1,0 +1,62 @@
+#_Five Girl's Individual Weights_
+
+_The five school children in couples weigh 129 pounds, 125 pounds, 124 pounds, 123 pounds, 122 pounds, 121 pounds, 120 pound, 118 pounds, 116 pounds and 114 pounds on a weighing machine._
+
+_author: Sam Loyd_
+
+I don't know if this was Sam Loyd's original text for the puzzle, but it seems a little incomplete.
+The descending order of the pair's weights permits to deduce that the girls wanted to take advantage of one single coin on the weighing machine, which will display lower weights but not higher. So, we may also presume that the girls ordered from the heaviest to the lightest.
+Let's follow that descending order and give the girls alphabetical names: Anna, Beatrice, Caroline, Daphne and Elizabeth.
+
+Solution.
+
+1. First we get the weights of the 3 heaviest girls as follow:
+
+```
+function girlsweights1()
+    for A in 1:100
+        for B in 1:100
+            for C in 1:100
+                if A+B == 129 && A+C == 125 && B+C == 124
+                    println("Anna's weight is ", A)
+                    println("Beatrice's weight is ", B)
+                    println("Caroline's weight is ", C)
+                end
+            end
+        end
+    end
+end
+
+> girlsweights1()
+Anna's weight is 65
+Beatrice's weight is 64
+Caroline's weight is 60
+```
+
+2. Now let's do identically for the 3 lightest girls:
+
+```
+function girlsweights2()
+    for C in 1:100
+        for D in 1:100
+            for E in 1:100
+                if C+D == 118 && C+E == 116 && D+E == 114
+                    println("Caroline's weight is ", C)
+                    println("Daphne's weight is ", D)
+                    println("Elizabeth's weight is ", E)
+                end
+            end
+        end
+    end
+end
+
+> girlsweights2()
+Caroline's weight is 60
+Daphne's weight is 58
+Elizabeth's weight is 56
+```
+
+We must have done it right because Caroline's weight was calculated the same, 60.
+
+Answer for the puzzle: 
+The girls individual weights are 65, 64, 60, 58 and 56 pounds.

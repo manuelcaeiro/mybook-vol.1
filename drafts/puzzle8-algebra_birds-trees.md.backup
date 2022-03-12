@@ -1,0 +1,26 @@
+#_Birds on Trees_
+
+_There are 2 trees in a garden (tree "A" and "B") and on the both trees are some birds._
+
+_The birds of tree A say to the birds of tree B that if one of you comes to our tree, then our population will be the double of yours._
+
+_Then the birds of tree B tell to the birds of tree A that if one of you comes here, then our population will be equal to that of yours._
+
+_How many birds are there on each tree?_
+
+
+
+```
+function birdsOnTrees()
+    for n in 1:10
+        for m in 1:10
+            if (n+1) == 2*(m-1) && (m+1) == (n-1)
+                print("Tree A: ", n, " birds", ", ", "Tree B: ", m, " birds")
+            end
+        end
+    end
+end
+
+# > birdsOnTrees()
+# Tree A: 7 birds, Tree B: 5 birds
+```

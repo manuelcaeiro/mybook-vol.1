@@ -1,0 +1,27 @@
+#_Weighing With Marbles_
+
+_•	 If a top and three cubes equal in weight to 12 marbles (the scales balance),_
+
+_• and a top is equal in weight to a cube and eight marbles (the scales balance),_
+
+_• how many marbles would be needed to balance with a top?_
+
+Solution:
+
+```
+ function marblesweigh()
+    for c in 1:10
+        for t in 1:10
+            if 3c + t == 12 && t == 8 + c
+                print("To balance a top ", t, " marbles will be needed.") 
+            end
+        end
+    end
+end
+
+> marblesweigh()
+To balance a top 9 marbles will be needed.
+```
+
+
+Note: A cube and a marble weigh the same.

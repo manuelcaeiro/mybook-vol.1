@@ -1,0 +1,121 @@
+#_Census Puzzle_
+
+_A census taker approaches a house and asks the woman who answers the door "How many children do you have, and what are their ages?"_
+
+_The woman replies "I have three children, the product of their ages are 36, the sum of their ages are equal to the address of the house next door."_
+
+_The census taker walks next door, comes back and says "I need more information."_
+
+_The woman replies "I have to go, my oldest child is sleeping upstairs."_
+
+_Census taker then says "Thank you, I now have everything I need."_
+
+_What are the ages of each of the three children?_
+
+_Puzzle supplied by Richard Rider_
+
+
+Some mathematical thinking:
+
+- First thing to do is get the factors of 36, [factorization](https://en.wikipedia.org/wiki/Factorization), which are also all the possible divisors (with remainder zero).
+
+```
+function factoring(n)
+    allfactors = [1]
+    for e in 2:(n/2)+1
+        if n % e == 0
+            push!(allfactors, Int(e))
+        end
+    end
+    return allfactors
+end
+
+# To replicate the solution for this puzzle it's indispensable
+# to write this function (on the IDE on this example), but not
+# to run it.
+# Anyway, you can run it to get the factors of any number, and
+# also to test if a number (greater than 2) is prime (true if
+# the output is 1).
+# For example:
+> print(factoring(36))
+[1, 2, 3, 4, 6, 9, 12, 18]
+> factoring(283)   # 283 is prime
+1-element Vector{Int64}:
+ 1
+```
+
+- Next, these factors must fulfil some conditions:
+
+ The product of the 3 factors must be 36 and, at the same time, their sum must be  _equal to the address of the house next door._
+ 
+ These 2 conditions will be only true for the following values of _door_: 10, 11, 13, 16, 18, 21
+
+```
+function agescalc(n, door)
+    factors = []
+    allfac = factoring(n)
+    for x in allfac
+        for y in allfac
+            for z in allfac
+                if x*y*z == 36 && x+y+z == door
+                    push!(factors, x)
+                    push!(factors, y)
+                    push!(factors, z)
+                end
+            end
+        end
+    end
+    return factors
+end
+
+# To replicate the solution for this puzzle it's indispensable
+# to write this function (on the IDE on this example), but to
+# run it function factoring(n) must have been previously
+# written. For example:
+> print(agescalc(36,13))
+Any[1, 6, 6, 2, 2, 9, 2, 9, 2, 6, 1, 6, 6, 6, 1, 9, 2, 2]
+> print(agescalc(36,11))
+Any[2, 3, 6, 2, 6, 3, 3, 2, 6, 3, 6, 2, 6, 2, 3, 6, 3, 2]
+```
+
+**Note**: With this code we are getting permutations (sequences of 3 elements repeated for every possible order). This is sub-optimal, but we have decided to use only the _standard libraries_ of a basic Julia installation. In order to get [combinations](https://www.totalassignmenthelp.com/blog/permutation-vs-combination/) we should have used an extension library for Julia called [Combinatorics](https://github.com/JuliaMath/Combinatorics.jl).
+
+- Finally, to get the 3 children's ages the statements _"I need more information."_ and _my oldest child is sleeping upstairs."_ must be considered.
+
+ The only possible sum of factors (door number) that has a double result is 13. And only one result is right because the woman has an oldest child.
+
+```
+function showages(n, door)
+    ages = agescalc(n, door)
+    if length(ages) < 2
+        return "That door number is not a possible sum of any 3 factors which product is 36. Please choose another."
+    end
+    if sort(ages[1:3]) == sort(ages[4:6])
+        println(ages[1],"x",ages[2],"x",ages[3],"=",n)
+    else
+        println(ages[1],"x",ages[2],"x",ages[3],"=",n)
+        println(ages[4],"x",ages[5],"x",ages[6],"=",n)
+    end
+    if door == 13
+    	println("The only possible ages of the 3 children are ")
+    	println(ages[4], ", ", ages[5], " and ", ages[6], ".")
+    end
+end
+
+# To replicate the solution for this puzzle it's indispensable
+# to write and run this function (on the IDE on this example),
+# but to run it functions factoring(n) and agescalc(n, door)
+# must have been previously written.
+> showages(36, 13)
+1x6x6=36
+2x2x9=36
+The only possible ages of the 3 children are 
+2, 2 and 9.
+> showages(36, 11)
+2x3x6=36
+> showages(36, 12)
+"That door number is not a possible sum of any 3 factors which product is 36. Please choose another."
+```
+
+The answer for the puzzle:
+The only possible ages of the 3 children are 2, 2 and 9.

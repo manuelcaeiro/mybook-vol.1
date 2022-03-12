@@ -1,0 +1,47 @@
+#_The Herd division_
+
+_An Arab Sheik, finding himself about to die, called his sons about him and said: "Divide my camels among you in the proportion of one-half of the herd to the eldest son, the second son one-third, and to the youngest son one-ninth."
+Thereupon the oldest son cried: "O, my father, one-half, one-third, and one-ninth do not constitute a whole. To whom, therefore, shall the remainder of the herd be given?"_
+
+_"To any poor man who may be standing by when the division is made," replied the Sheik, who thereupon died._
+
+_When the herd was collected a new difficulty arose. The number of the camels could not be divided either by two or three or nine. While the brothers were disputing, a poor but crafty Bedouin, standing by with his camel, exclaimed, "Behold, I will sell you my beast for ten pieces of silver, so that you may then divide the herd."_
+
+_Seeing that the addition of one camel would solve the difficulty, the brothers jumped at the offer, and proceeded to divide the herd, but when each had received his allotted portion there yet remained one camel._
+
+_"I am the poor man standing by." Said the crafty Bedouin, and gaily mounting the camel, he rode away, with the ten pieces of silver in his turban._
+
+_Now, how many camels were in the Sheik's herd?_
+
+_author: Sam Loyd_
+
+
+A big story with a short solution.
+
+In order to be divided in the proportions given by the Sheik the number of camels ought to be divisible by 2, 3 and 9, and the remainder should be 1.
+
+```
+function herdDivision()
+    for a in 1:100
+        for b in 1:100
+            if b % a == 1 && a//b == 1//2 + 1//3 + 1//9
+                println("The Sheik's herd had ", a, " camels.")
+                println("Adding the Bedouin's camel the herd came to have ", b, " camels.")
+            end
+        end
+    end
+end
+
+> herdDivision()
+The Sheik's herd had 17 camels.
+Adding the Bedouin's camel the herd came to have 18 camels.
+```
+
+
+Now the divison could be made the following way:
+
+- For the elder brother, 18÷2=9 camels.
+- For the middle brother, 18÷3=6 camels.
+- For the younger brother, 18÷9=2 camels.
+
+Notice however that 9+6+2=17 camels, that is, the original herd number. So, now there is a remainder of 1 camel - for "the poor man standing by".

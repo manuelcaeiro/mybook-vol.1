@@ -1,0 +1,27 @@
+#_Number and Reverse_
+
+_When the units and tens digits of a certain two-digit number are reversed, the sum of the two numbers is 121 and the difference is 9._
+
+_What is the tens digit of the original number?_
+
+
+Solution:
+
+```
+function numandreverse()
+    print("Two numbers fulfil the conditions: ")
+    for n in 11:99
+        rsn = reverse(string(n))
+        if parse(Int, rsn) + n == 121 && abs(parse(Int, rsn) - n) == 9
+            print(n, "  ")
+        end
+    end
+end
+
+> numandreverse()
+Two numbers fulfil the conditions: 56  65
+```
+
+
+The answer for the puzzle:
+The tens digit(s) of the original numbers(s) are 6 and 5.

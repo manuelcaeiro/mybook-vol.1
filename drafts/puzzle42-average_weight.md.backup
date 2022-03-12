@@ -1,0 +1,31 @@
+#_Students Weight's Averages_
+
+_When a student weighing 54 kg left a class, the average weight of the remaining 59 students increased by 100g._
+
+_What is the average weight of the remaining 59 students?_
+
+
+Solution:
+
+- Let _a_ be the average weight of the 59 students (after the 54 Kg student left the class),
+- The average weight of the 60 students will be equal to 59 times the average of the 59 plus 54 Kg, all divided by 60, i.e. (59*a+54)/60 ...
+- ... which is told to be the same as the average weight of the 59 less 0.1 Kg.
+
+
+```
+function averweight()
+    for a in 1:50
+        if (59*a + 54)/60 == a - 0.1
+            println("The average weight of the 59 students is ", a, " Kg.")
+            println("The average weight of the 60 students was ", a-0.1, " Kg.")
+        end
+    end
+end
+
+> averweight()
+The average weight of the 59 students is 60 Kg.
+The average weight of the 60 students was 59.9 Kg.
+```
+
+
+So, the total weight decreased 54 Kg, but the average weight increased from 59.9 to 60 Kg. 

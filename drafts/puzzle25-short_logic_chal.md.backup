@@ -1,0 +1,22 @@
+#_Short Logic Challenge_
+
+_Twenty times a positive integer is less than its square by 156._
+
+_What is the integer?_
+
+
+Solution:
+
+```
+function getint()
+    for int in 1:100
+        if (int * 20) + 156 == int^2
+            print(int)
+        end
+    end
+end
+
+> getint()
+26
+```
+

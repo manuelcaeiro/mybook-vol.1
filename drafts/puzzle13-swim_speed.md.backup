@@ -1,0 +1,52 @@
+# _Swim Speed_
+
+_If Sarah can swim 4 kilometre downstream (with the current) in a river in 30 minutes, & upstream 1.6 kilometre (against the current) in 15 minutes, how long would it take her to swim 1 Kilometre in still water?_
+
+Let's take this question to exemplify a more general way of using code to solve mathematics puzzles, which will allow to solve other puzzles about speed and average speed.
+
+1. Start by calculating the partial speeds (in Km/hour) from the known distances and times.
+
+```
+function speed(dist, time)
+    # input distance in Kilometers and time in minutes
+    # to get Km/h
+    speed = (60 * dist) / time
+    print(speed, " Km/h")
+end
+
+# > speed(4, 30)
+# 8.0 Km/h
+# > speed(1, 15)
+# 4.0 Km/h
+```
+
+2. Now let's use the function bellow to calculate Sarah's average speed, which shall probably be the speed in still water.
+
+```
+function average(a, b, x...)
+    speeds = (a, b, x...)
+    average = sum(speeds) / length(speeds)
+    print("The average speed is: ", average, " Km/h")
+end
+
+# > average(8, 4)
+# The average speed is: 6.0 Km/h
+```
+
+3. Now let's use again the function bellow to calculate the time Sarah will take at that speed to swim 1600 Km in the pool.
+
+```
+function time(dist, speed)
+    # distance input in meters
+    time = dist * 60 / speed
+    print("Sarah shall swim ", dist, " Km in ", time)
+    print(" minutes, in still waters.")
+end
+
+# > time(100, 6)
+# Sarah shall swim 100 meters in 1.0 minutes, in still waters.*
+```
+
+* Which is quite good considering that the 100 meters freestyle world record is 51.71 seconds, and  belongs (presently) to (guess who) Sarah Sjöström. :)
+
+P.S.: The speed of the current is 8 - 6 = 2 or 6 - 4 = 2 Km/h

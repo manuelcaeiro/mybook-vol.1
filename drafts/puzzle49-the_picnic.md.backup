@@ -1,0 +1,55 @@
+#_The Picnic_
+
+_Four married couples had a picnic together, and their refreshments included thirty-two bottles of lemonade._
+
+_Mary only disposed of one bottle, Anne had two, Jane swallowed the contents of three, and Elizabeth emptied four bottles._
+
+_The husbands were more thirsty, except John MacGregor, who drank the same quantity as his better half._
+
+_Lloyd Jones drank twice as much as his wife, William Smith three times as much as his wife, and Patrick Dolan four times as much as his wife demanded._
+
+_The puzzle is to find the surnames of the ladies._
+
+_Which man was married to which woman?_
+
+_author: H. Dudeney_
+
+
+Solution:
+
+- Let _a, b, c_ and _d_ represent the bottles of lemonade each lady  drank;
+- Therefore, a+b+c+d=10 bottles, 
+- and a+2b+3c+4d=22 is the number of bottles their husbands drank.
+
+
+```
+function lemonades()
+    for a in 1:4
+        for b in 1:4
+            for c in 1:4
+                for d in 1:4
+                    if a+b+c+d == 10 && a+2b+3c+4d == 22 && a!=b && a!=c && a!=d && b!=c && b!=d && c!=d
+                        println("Jane and John drank ", a, " lemonades each")
+                        println("Elizabeth drank ", b, " and Lloyd ", 2b)
+                        println("Mary drank ", c, " and William ", 3c)
+                        println("Anne drank ", d, " and Patrick ", 4d)
+                    end
+                end
+            end
+        end
+    end
+end
+
+> lemonades()
+Jane and John drank 3 lemonades each
+Elizabeth drank 4 and Lloyd 8
+Mary drank 1 and William 3
+Anne drank 2 and Patrick 8
+```
+
+The answer for the puzzle:
+
+- John MacGregor was married to Jane.
+- Lloyd Jones was married to Elizabeth.
+- William Smith was marries to Mary.
+- Patrick Dolan was marries to Anne.

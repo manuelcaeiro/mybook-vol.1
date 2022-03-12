@@ -1,0 +1,39 @@
+#_Office Workers_
+	
+_There are as many four-legged chairs and as many four-legged tables as workers in the office of Yamraj, and as many three-legged stools as four-legged office closets._
+
+_If the number of stools is one more than number of workers and the total number of legs is 585, then what is the number of workers in the office?_
+
+
+Solution:
+
+```
+function officeworkers()
+    for w in 1:50
+        for tc in 1:100
+            for s in 1:50
+                for c in 1:50
+                    if w*2 + tc*4 + c*4 + s*3 == 585 && s == w+1 && tc == w*2 && s == c
+                        println("Number of workers is: ", w)
+                        println("There are also:")
+                        println(tc, " tables and chairs,")
+                        println(s, " stools, and")
+                        println(c, " office closets.")
+                    end
+                end
+            end
+        end
+    end
+end
+
+> officeworkers()
+Number of workers is: 34
+There are also:
+68 tables and chairs,
+35 stools, and
+35 office closets.
+```
+
+
+The answer for the puzzle:
+There are 34 workers in the office.

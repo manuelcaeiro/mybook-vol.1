@@ -1,0 +1,50 @@
+#_Numbers - Decimal to Binary_
+
+_"Suppose you wish to convert an ordinary number into the two-based system. You divide it by 2 and set the reminder to one side. (If the number is even, the remainder will be 0, if odd, it will be 1.) Working only with the whole number portion of the quotient, you divide that by 2 again, and again set the remainder to one side and work only with the whole-number portion of the new quotient. When the whole portion is reduced to 0 as a result of the repeated divisions by 2, you stop. The remainders, read backwards, give the original number in the two-based system._
+
+_..._
+
+_In the two-based system, then, 131 is writen 10000011."_
+
+_author: Isaac Asimov (Asimov on Numbers, 1959)_
+
+
+1. Solution to translate any decimal number into a binary number:
+
+```
+function decim2binar(n)
+    bn = ""
+    while n > 0
+        bn = bn * string(n % 2)
+        n = n ÷ 2
+    end
+    print(reverse(bn))
+end
+
+> decim2binar(131)
+10000011
+```
+
+2. A function to do the opposite translation...
+
+```
+function binar2decim(bn)
+    sbn = reverse(string(bn))
+    dn = []
+    for i in 1:length(sbn)
+        pd = parse(Int, sbn[i]) * 2^(i-1)
+        push!(dn, pd)
+    end
+    return sum(dn)
+end
+
+> binar2decim(10000011)
+131
+```
+
+... or simply use one of Julia' methods:
+
+```
+> Int(0b10000011)
+131
+```

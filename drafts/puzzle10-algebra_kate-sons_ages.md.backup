@@ -1,0 +1,36 @@
+#_Kate's and Son's ages_
+
+_5 years ago Kate was 5 times as old as her Son._
+
+_In 5 years her age will be 8 less than three times her Son's age at that time._
+
+_How old are Kate and her Son now?_
+
+_Puzzle Author: Stephen Froggatt_
+
+Let K and S be the ages of Kate and her son at present.
+
+So, Kate's age five years ago was five times her son's age five years ago:
+
+K - 5 = (S - 5) * 5
+
+And Kate's age in five years will be three times her son's age in five years minus eight:
+
+K + 5 = (S + 5) * 3 - 8
+
+
+```
+function relativeAges()
+    for K in 1:50
+        for S in 1:25
+            if K - 5 == (S - 5) * 5 && K + 5 == (S + 5) * 3 - 8
+                print("Kate's age is ", K, " | ", "Son's age is ", S)
+            end
+        end
+    end
+end
+    
+# > relativeAges()
+# Kate's age is 35 | Son's age is 11
+```
+

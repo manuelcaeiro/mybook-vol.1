@@ -1,0 +1,38 @@
+#_Right Angle Triangle_
+
+_The lengths of the sides of a right-angled triangle are natural numbers._
+
+_The length of one of the perpendicular sides is 10._
+
+_Find the length of the remaining sides of this triangle._
+
+_author: Straszewicz_
+
+
+Solution:
+
+- Let's call _a_ and _b_ to the perpendicular sides of the triangle, and _h_ to its hypotenuse.
+
+- The [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem) states that the sum of the squares of the perpendicular sides is equal to the square of the hypotenuse, i.e. a^2+b^2=h^2.
+
+- Knowing that a=10 the equation can be written as h^2-b^2=100.
+
+
+```
+function trianglesides()
+    for b in 1:50
+        for h in 1:100
+            if h^2-b^2 == 100
+                print("b = ", b, "; ", "h = ", h)
+            end
+        end
+    end
+end
+
+> trianglesides()
+b = 24; h = 26
+```
+
+
+The sides of this triangle are: 
+short leg = 10, long leg = 24, hypotenuse = 26

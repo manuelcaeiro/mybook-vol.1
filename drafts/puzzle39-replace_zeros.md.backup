@@ -1,0 +1,30 @@
+# _Replace third and fifth zeros_
+
+_What digits should be put instead of zeros in the third, and the fifth places in number 3000003 in order to give a number divisible by 13?_
+
+_author: Straszewicz_
+
+
+Solution:
+
+```
+function replacezeros()
+    println("Divisible by thirteen -> Digits that replace zeros")
+    for n in 3000003:3090903
+        sn = string(n)
+        if n % 13 == 0 && sn[2] == '0' && sn[4] == '0' && sn[6] == '0' && sn[3] != '0' && sn[5] != '0' && sn[end] == '3'
+            println(n, " -> ", sn[3], " & ", sn[5])
+        end
+    end
+end
+
+> replacezeros()
+Divisible by thirteen -> Digits that replace zeros
+3020303 -> 2 & 3
+3030703 -> 3 & 7
+3050203 -> 5 & 2
+3060603 -> 6 & 6
+3080103 -> 8 & 1
+3090503 -> 9 & 5
+```
+ 

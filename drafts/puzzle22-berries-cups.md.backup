@@ -1,0 +1,32 @@
+#_Blueberries on Cups_
+
+_Maria has some blueberries and some cups. If she puts 9 blueberries into each cup she will have two cups left. If she puts 6 blueberries into each cup she will have three blueberries left over._
+
+_How many blueberries and cups has Maria?_
+
+So:
+
+1. The number of groups of nine berries is equal to the number of cups minus two.
+2. The number of berries minus three, divided in groups of six is equal to the number of cups.
+
+
+```
+function berriesincups()
+    for c in 1:20
+        for b in 10:100
+            if b/9 == c-2 && (b-3)/6 == c
+                print("Maria has ", c, " cups and ", b, " blueberries.")
+            end
+        end
+    end
+end
+
+> berriesincups()
+Maria has 7 cups and 45 blueberries.
+
+# Check if it is true
+> 45 / 9
+5   # groups of 9 in 5 cups
+> 5 + 2
+7   # cups in total
+```

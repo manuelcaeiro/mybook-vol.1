@@ -1,0 +1,66 @@
+#_Covent Garden Problem_
+
+_Here is a puzzle known as the Covent Garden Problem, which appeared in London half a century ago, accompanied by the somewhat surprising assertion that it had mystified the best mathematicians of England:_
+
+_Mrs. Smith and Mrs. Jones had equal number of apples but Mrs. Jones had larger fruits and was selling hers at the rate of two for a penny, while Mrs. Smith sold three of hers for a penny._
+
+_Mrs. Smith was for some reason called away and asked Mrs. Jones to dispose of her stock. Upon accepting the responsibility of disposing her friend's stock, Mrs. Jones mixed them together and sold them of at the rate of five apples for two pence._
+
+_When Mrs. Smith returned the next day the apples had all been disposed of, but when they came to divide the proceeds they found that they were just seven pence short, and it is this shortage in the apple or financial market which has disturbed the mathematical equilibrium for such a long period._
+
+_Supposing that they divided the money equally, each taking one-half, the problem is to tell just how much money Mrs. Jones lost by the unfortunate partnership?_
+
+_author: Sam Loyd_
+
+Solution:
+
+1. Look for a number _n_ such as its half, _n/2_ is divisible by 2, 3 and 5. _n_ is the total least number of apples the two ladies were selling.
+
+```
+function leastTotalApples()
+    for n in 1:100
+        if (n/2) % 2 == 0 && (n/2) % 3 == 0 && (n/2) % 5 == 0
+            return n
+        end
+    end
+end
+
+> leastTotalApples()
+60
+```
+
+2. Calculate the difference between the sum of the money that the ladies would have earned by selling individually, and the money earned by the common selling. 
+
+```
+# Mrs Jones sale
+30 / 2 * 1 = 15 pence
+# Mrs Smith sale
+30 / 3 * 1 = 10 pence
+# Mrs Jones plus Ms Smith
+10 + 15 = 25 pence
+# Common sale
+60 / 5 * 2 = 24 pence
+# Difference
+25 - 24 = 1 penny
+# Mrs Smith gain by collecting half the money
+24 / 2 - 10 = +2 pence
+# Mrs Jones loss by collecting half the money
+24 / 2 - 15 = -3 pence
+```
+
+3. "but when they came to divide the proceeds they found that they were just seven pence short"
+The loss for 60 apples, _n_, was only 1 penny, so everything must be multiplied by 7.
+
+```
+# Totals:
+# number of apples
+60 * 7 = 420 apples
+# each lady's apples
+30 * 7 = 210 apples
+# hidden profit for Mrs Smith from the common sale
+7 * 2 = 14 pence
+# hidden loss for Mrs Jones from the common sale
+7 * -3 = -21 pence
+```
+
+The answer for the puzzle: Mrs Jones lost 21 pence.

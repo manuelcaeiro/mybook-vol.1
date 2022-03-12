@@ -1,0 +1,73 @@
+#_Twelve Days of Christmas_
+
+
+_According to the traditional song, on the first day of Christmas (25th December), my true love sent to me:_
+
+• A partridge in a pear tree
+
+_On the second day of Christmas (26th December), my true love sent to me THREE presents:_
+
+• Two turtle doves
+• A partridge in a pear tree
+
+_On the third day of Christmas (27th December and so on) my true love sent to me SIX presents:_
+
+• Three French hens
+• Two turtle doves
+• A partridge in a pear tree
+
+_This carries on until the the twelfth day of Christmas, when my true love sends me:_
+
+• Twelve drummers drumming
+• Eleven pipers piping
+• Ten lords a-leaping
+• Nine ladies dancing
+• Eight maids a-milking
+• Seven swans a-swimming
+• Six geese a-laying
+• Five gold rings
+• Four calling birds
+• Three French hens
+• Two turtle doves
+• A partridge in a pear tree
+
+_After the twelve days of Christmas are over, how many presents has my true love sent me altogether?_
+
+_Puzzle Author: Stephen Froggatt_
+
+1. Strict, hard coded, solution:
+
+```
+function allgifts()
+    dg = []   # daily gifts storage
+    for d in 1:12
+        d = sum(1:d)   # daily gifts from day 1 to 12
+        push!(dg, d)   # storing each day gifts
+    end
+    print(sum(dg))   # showing total number of gifts in storage
+end
+
+> allgifts()
+364
+```
+
+2. Generalizing the function for any number of days:
+
+```
+function allgifts2(days)
+    dg = []   # daily gifts storage
+    for d in 1:days
+        d = sum(1:d)   # daily gifts from day 1 to days
+        push!(dg, d)   # storing each day gifts
+    end
+    print(sum(dg))   # showing total number of gifts in storage
+end
+
+# There are actually 13 days from 25 Dec to 6 Jan
+# Let's add to the list Thirteen puzzlers puzzling
+> allgifts(13)
+455
+```
+
+
+[Twelve Days of Christmas](https://en.wikipedia.org/wiki/Twelve_Days_of_Christmas)

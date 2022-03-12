@@ -1,0 +1,31 @@
+#_Find the numbers (1)_
+
+ABCD × E = DCBA
+
+_Replace letters with digits and have the answer be true. A,B,C,D and E are all different digits._
+
+
+```
+function findABCDxE()
+    # all 4 digit numbers
+    for n in 1000:9999
+        # 1 is neutral element of multiplication (a)
+        for m in 2:9
+            s = string(n)   # turn n into a string...
+            r = reverse(s)   # ... so you can reverse it
+            # turn the reversed string into a number
+            p = parse(Int64, r)
+            # another way of saying ABCD x E = DCBA
+            if n * m == p
+                println(n, "*", m, "=", p)
+            end
+        end
+    end
+end
+    
+# > findABCDxE()
+# 1089*9=9801
+# 2178*4=8712
+```
+
+(a) Multiplying by 1 would return as results the (long) list of all symetric numbers, from 1001 to 9999, and we don't want that.

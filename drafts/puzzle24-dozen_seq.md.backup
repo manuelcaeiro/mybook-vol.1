@@ -1,0 +1,90 @@
+#_Sequence & Check for Squares & Primes_
+
+_First: A 2-digit number is such that the sum of its digits is 3 times the difference between digits._
+
+_Second: Which of these 2-digit numbers are neither a perfect square nor a prime?_
+
+
+1. Find all the numbers that fulfil the First condition:
+
+```
+function all2digit()
+    l = []
+    for num in 10:99
+        digs = digits(num)
+        if sum(digs) == (digs[1]-digs[2])*3 || sum(digs) == (digs[2]-digs[1])*3
+            push!(l, num)
+        end
+    end
+    return l
+end
+
+#create a list L that catches the output of function all2digit()
+> L = all2digit()
+# print L to check the numbers in it
+> print(L)
+Any[12, 21, 24, 36, 42, 48, 63, 84]
+```
+
+2. Check if any of those numbers in L is a perfect square:
+
+```
+function isitsquare(l)
+    for n in 2:10
+        if n*n in l
+            println(n*n, " is the square of ", n)
+        end
+    end
+end
+
+> isitsquare(L)
+36 is the square of 6
+```
+
+3. Last, check if any of those numbers in L is prime:
+
+```
+function isitprime(n)
+    if -1 < n < 2
+        return false
+    end
+    if n == 2
+        return true
+    end
+    uplim = trunc(Int, n^(0.50)) + 1
+    for i in 2:uplim
+        if n % i == 0
+            return false
+        end
+    end
+    return true
+end
+
+# this function can be used to check primes number by number
+# and it can be used as auxiliary to check primes in arrays
+# using the following function
+
+function primesinarray(arr)
+    for e in arr
+        if isitprime(e) == true
+            println(e, " is prime")
+        end
+    end
+    println("NO prime numbers in this array")
+end
+
+# remember L
+> print(L)
+Any[12, 21, 24, 36, 42, 48, 63, 84]
+
+# now check L for primes
+> primesinarray(L)
+NO (more) prime numbers in this array
+
+# check the output of this function for a test array with prime numbers
+> test = [4, 6, 8, 10, 13, 17]
+> primesinarray(test)
+13 is prime
+17 is prime
+NO (more) prime numbers in this array
+```

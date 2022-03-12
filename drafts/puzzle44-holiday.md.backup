@@ -1,0 +1,42 @@
+#_Holiday in Singapore_
+
+_Liza went to Singapore with her husband. It rained for 13 days. But when it rained in the morning, the afternoon was lovely. And when it rained in the afternoon, the day was preceded by clear morning._
+
+_Altogether there were 11 very nice mornings and 12 very nice afternoons. How many days did their holiday last?_
+
+
+Let's assume the number of days as follows:
+
+- Rain in the morning and clear afternoon as _A_ days,
+- Clear morning and rain in the afternoon as _M_ days,
+- No rain the whole day as _W_ days,
+- Number of days with rain is A+M = 13,
+- Number of days with clear mornings is M+W = 11,
+- Number of days with clear afternoons is A+W = 12,
+
+
+```
+function holiday()
+    for A in 1:50
+        for M in 1:50
+            for W in 1:50
+                if A+M == 13 && M+W == 11 && A+W == 12
+                    println("Total days on holiday: ", A+M+W)
+                    println("Days with no rain: ", W)
+                    println("Days with morning rain: ", A)
+                    println("Days with afternoon rain: ", M)
+                end
+            end
+        end
+    end
+end
+
+> holiday()
+Total days on holiday: 18
+Days with no rain: 5
+Days with morning rain: 7
+Days with afternoon rain: 6
+```
+
+
+The total holiday was 18 days.

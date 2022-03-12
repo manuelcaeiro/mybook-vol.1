@@ -1,0 +1,47 @@
+# _Eliza's Surname_
+
+_Smith, Brown and Robinson have provided themselves with a penny pencil each, and took their wives to a stockbroker's office to buy shares._
+
+_Mary bought 50 more shares than Mister Brown, and Mister Robinson bought 120 more than Jane._
+
+_Each man paid as many shillings per share as he bought shares, and each wife as many pence per share as she bought shares, and every man spent one guinea more than his wife._
+
+_What was Eliza's surname?_
+
+_author: H. Dudeney_
+
+
+Solution (many steps):
+
+- There are 12 pence per shilling, and 21 shillings per guinea. We are told that _every man spent one guinea more than his wife_. Thus, each man spends 21×12=252 pence more than his wife, but only 251 pence on shares because 1 penny was already spent buying the pencil;
+- Now remember that _Each man paid as many shillings per share as he bought shares, and each wife as many pence per share as she bought shares_, i.e. the number of shares is always equal to the number of shillings, _M_ for the men,   or pence, _W_ for the women;
+- Therefore the following equation must be true: 12x(MxM)=(WxW)+251
+
+```
+function sharespairs()
+    for M in 1:2000
+        for W in 1:2000
+            if 12*(M*M) == (W*W)+251
+                println("M = ", M, "W = ", W)
+            end
+        end
+    end
+end
+
+> sharespairs()
+M = 5; W = 7
+M = 21; W = 71
+M = 49; W = 169
+M = 289; W = 1001
+```
+
+- Notice that we got pairs of results. Let's check these results;
+- We are told that _Mary bought 50 more shares than Mister Brown_, and the difference between 71 and 21 is exactly 50. So, this must be the couple Mr. and Mrs. Brown;
+- We are also told that _Mister Robinson bought 120 more than Jane_, and the difference between 289 and 169 is exactly 120. However, these values do not belong to the same pair/couple. So, Jane must be Mrs. Smith and Mr. Smith bought 49 shares.
+- So, Eliza can only be Mrs. Robinson. (This is the answer for the puzzle.)
+	
+- The list of the couples and the shares they each bought:
+
+1. Mr. Brown -> 21, Mrs.Brown (Mary) -> 71
+2. Mr. Smith -> 49, Mrs. Smith (Jane) -> 169
+3. Mr. Robinson -> 289, Mrs. Robinson (Eliza) -> 1001

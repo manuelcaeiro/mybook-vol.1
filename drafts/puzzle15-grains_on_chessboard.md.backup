@@ -1,0 +1,66 @@
+#_Wheat on a Chessboard_
+
+_The Wheat and a Chessboard is an ancient legend about the inventor of chess, who showed his invention to the Emperor of India for the first time. The Emperor was very impressed by the invention._
+
+_He liked it so much, that he offered any reward the inventor could wish for. The inventor said: “My wish is very simple. There are 64 squares on the chessboard and:_
+
+_- for the first square I wish only 1 grain of wheat;_
+
+_- for the second one I wish 2 grains;_
+
+_- for the third one I wish 4 grains;_
+
+_- for the fourth I wish 8 grains;_
+
+_and so on for all the 64 squares._
+
+_The Emperor was not good at math and was surprised that the inventor seemed to have asked for such a small reward. A few days later the Emperor asked his treasurer whether the chess inventor has been rewarded. The treasurer informed the emperor that the reward turned out to be an astronomical sum, greater than all the wheat that could be gathered in many centuries._
+
+_author: Into Math_
+
+_This exercise can be used to demonstrate how quickly exponential sequences grow, as well as to introduce exponents, zero power, capital-sigma notation and geometric series._ [Wheat and chessboard problem](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem)
+
+For an explanation of the solution: [Wheat and chessboard problem, Solutions](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem#Solutions)
+
+- Solution in Julia code:
+
+```
+# wocGeomProg = wheat on chessboard Geometric Progression
+
+function wocGeomProg(n)
+
+    # grains_n_sq = grains on the n square
+    grains_n_sq = big(2)^big(n-1)
+    
+    # grains_sum_to_n = sum of all grains to n square
+    grains_sum_to_n = big(2)^big(n) - 1
+    
+    println("The number of grains on the square ", n, " is ", grains_n_sq)
+    
+    println("The sum of all grains to the square ", n, " is ", grains_sum_to_n)
+    
+end
+
+> wocGeomProg(1)
+The number of grains on the square 1 is 1
+The sum of all grains to the square 1 is 1
+
+> wocGeomProg(2)
+The number of grains on the square 2 is 2
+The sum of all grains to the square 2 is 3
+
+> wocGeomProg(3)
+The number of grains on the square 3 is 4
+The sum of all grains to the square 3 is 7
+
+> wocGeomProg(4)
+The number of grains on the square 4 is 8
+The sum of all grains to the square 4 is 15
+
+> wocGeomProg(64)
+The number of grains on the square 64 is 9223372036854775808
+The sum of all grains to the square 64 is 18446744073709551615
+```
+
+
+Note: When dealing with big numbers in Julia (for example 2^64), one must use big() or Int128() to obtain a correct result.

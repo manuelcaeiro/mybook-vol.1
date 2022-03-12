@@ -1,0 +1,47 @@
+#_Alphabet Numbers_
+
+_Using any letter only once, what are the largest and smallest numbers that you can write down in words?_
+
+_Puzzle Author: Stephen Froggatt_
+
+1. In order to solve directly this puzzle one would need a huge list of number names. So, let's try a different approach. You think of a big number name that seems to fit the puzzle rule (any letter only once) and then test it using the function bellow:
+
+
+```
+function repeatedletters(str)	
+    compare = Set(str) # eliminate repeated characters
+    
+    # difference between string and set lengths = repeated chars
+    dif = length(str) - length(compare)
+    if dif != 0
+        return "There are $dif repeated letters in $str."
+    else
+        return "There are no repeated letters in $str."
+    end
+end
+
+> repeatedletters("four thousand")
+"There are 2 repeated letters in four thousand."
+> repeatedletters("five thousand")
+"There are no repeated letters in five thousand."
+```
+
+2. However, as you may have noticed, there is a problem with the previous code; you can only use 2 word names. If you use 3 word names (five thousand two, for example) the function will count the spaces between words as a repeated character. So, we need a more general function that eliminates the empty spaces on the string of words of you number name:
+
+```
+function repeatedletters2(str)
+    joined = filter(char -> !isspace(char), str) # take out spaces
+    compare = Set(joined) 
+    dif = length(joined) - length(compare)
+    if dif != 0
+        return "There are $dif repeated letters in $str."
+    else
+        return "There are no repeated letters in $str."
+    end
+end
+
+> repeatedletters2("The quick brown")
+"There are no repeated letters in The quick brown."
+> repeatedletters2("The quick brown fox")
+"There are 1 repeated letters in The quick brown fox."
+```

@@ -1,0 +1,39 @@
+#_The Price of Eggs_
+
+_This odd little problem in domestic arithmetic was sprung by the cook upon Mrs. Smith when she wanted to know what the grocer charged for such small eggs._
+
+_"I paid twelve cents for the lot," replied Bridget, "but I made him throw in two extra ones, because they were so little, and you see that made them cost one cent a dozen less than his first asking price_
+
+_Tell now how many eggs she received for her twelve cents?_
+
+_author: Sam Loyd_
+
+
+Solution:
+
+- Let _x_ be the number of eggs offered by the grocer for 12 cents;
+- The price of a dozen would be, then 12 cents divided by the number of dozens, that is, 12/(x/12);
+- If we add to _x_ the 2 extra eggs that the cook demanded, the price for a dozen would be 1 cent less, that is, 12/((x+2)/12), and if we add that cent less the price for a dozen will be equal in both cases.
+
+```
+function eggsprice()
+    for x in 1:20
+        if 12/(x/12) == 12/((x+2)/12)+1
+            println("The grocer offered ", x, " eggs for 12 cents.")
+            println("The cook recieved ", x+2, " eggs for the same price.")
+            println("The price of a dozen in the first case is ", 12/(x/12), " cents.")
+            println("The price of a dozen in the second case is ", 12/((x+2)/12), " cents.")
+        end
+    end
+end
+
+> eggsprice()
+The grocer offered 16 eggs for 12 cents.
+The cook recieved 18 eggs for the same price.
+The price of a dozen in the first case is 9.0 cents.
+The price of a dozen in the second case is 8.0 cents.
+```
+
+
+The answer for the puzzle:
+The cook received 18 eggs for 12 cents.

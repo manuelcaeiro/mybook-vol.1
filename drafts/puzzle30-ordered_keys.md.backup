@@ -1,0 +1,90 @@
+#_Order the Keys_
+
+_Bluebeard explains that his bunch of keys was strung upon an endless key ring and divided into three groups so that the first group multiplied by the second equaled the third!_
+
+_That was the secret by which he knew whether the keys had been tampered with and forbidden chambers had been entered._
+
+_You see that 6910 multiplied by 7 does not amount to 83452, so the keys were not replaced properly in their groups._
+
+_Can our clever puzzlists show how the keys must have been arranged in three groups so that the first group multiplied by the second makes the third?_
+
+_author: Sam Loyd_
+
+
+- Basically, all we have to do is find a way to have 3 different groups of numbers, all of different digits; the first 2 numbers being the factors of a multiplication which result is equal to the 3rd number. 
+
+- The total number of digits is 10 (0,1,2,3,4,5,6,7,8,9), half for the 2 factors and half for the result.
+
+- Sets in Julia do not allow repeated elements, digits for the case here, so if you have a Set of length 10 with both the digits of the factors and the digits of the result, it means that the numbers have all different digits.
+
+Solution 1:
+
+```
+function orderkeys()
+    println("The keys may be ordered in the following groups:")
+    for a in 10:99
+        for b in 100:999
+            da = digits(a); db = digits(b)
+            dadb = union(da, db)
+            daxb = digits(a*b)
+            dadbdaxb = union(dadb, daxb)
+            Sdadbdaxb = Set(dadbdaxb)
+            if length(Sdadbdaxb) == 10
+                println(a, " x ", b, " = ", a*b)
+            end
+        end
+    end
+end
+
+> orderkeys()
+The keys may be ordered in the following groups:
+27 x 594 = 16038
+36 x 495 = 17820
+39 x 402 = 15678
+45 x 396 = 17820
+46 x 715 = 32890
+52 x 367 = 19084
+54 x 297 = 16038
+63 x 927 = 58401
+78 x 345 = 26910
+```
+
+Solution 2:
+
+```
+function orderkeys2()
+    println("The keys may be ordered in the following groups:")
+    for a in 1:9
+        for b in 1000:9999
+            db = digits(b)
+            dadb = union(a, db)
+            daxb = digits(a*b)
+            dadbdaxb = union(dadb, daxb)
+            Sdadbdaxb = Set(dadbdaxb)
+            if length(Sdadbdaxb) == 10
+                println(a, " x ", b, " = ", a*b)
+            end
+        end
+    end
+end
+
+> orderkeys2()
+The keys may be ordered in the following groups:
+3 x 5694 = 17082
+3 x 6819 = 20457
+3 x 6918 = 20754
+3 x 8169 = 24507
+3 x 9168 = 27504
+4 x 3907 = 15628
+4 x 7039 = 28156
+4 x 9127 = 36508
+6 x 5817 = 34902
+7 x 3094 = 21658
+7 x 4093 = 28651
+7 x 9304 = 65128
+7 x 9403 = 65821
+```
+
+
+The answer for the puzzle: 
+There are at least 22 possible solutions as shown in the code boxes above.

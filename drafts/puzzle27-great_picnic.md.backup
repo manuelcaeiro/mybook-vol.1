@@ -1,0 +1,36 @@
+#_Great Picnic_
+
+_When they started off on the great annual picnic every wagon in town was pressed into service, each one carrying the same number of people._
+
+_Half way to the picnic ground ten wagons broke down, so it was necessary for each of the remaining wagons to carry one more person._
+
+_When they started for home it was discovered that fifteen more wagons were out of commission, so on the return trip there were three persons more in each wagon than when they started out in the morning._
+
+_Now who can tell how many people attended the great annual picnic?_
+
+_author: Sam Loyd_
+
+
+Solution:
+
+1. Let's assign _w_ for the number of wagons and _p_ for people in each wagon. To go straight for the answer we will just need to know _w_ times _p_.
+
+2. Using these variables and the conditions described in the text it is possible to establish two equations leading to the same result (w*p).
+
+
+```
+function peopleandwagons()
+    for w in 10:200
+        for p in 5:50
+            if w*p == (w-10)*(p+1) && w*p == (w-25)*(p+3)
+                println(w*p, " people attended the great annual picnic.")
+                println(w, " wagons started the service, each one carrying ", p, " persons.")
+            end
+        end
+    end
+end
+
+> peopleandwagons()
+900 people attended the great annual picnic.
+100 wagons started the service, each one carrying 9 persons.
+```

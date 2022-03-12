@@ -1,0 +1,43 @@
+#_Horses and Bullocks_
+
+_A dealer bought a number of horses at £17, 4s. each, and a number of bullocks at £13, 5s. each._
+
+_He then discovered that the horses had cost him in all 33s. more than the bullocks._
+
+_Now, what is the smallest number of each he must have bought?_
+
+_author: H. Dudeney_
+
+
+Solution:
+
+- First reduce the amounts to shillings: 20x17+4=344s for each horse and 20x13+5=265s for each bullock;
+- Next assign variables _H_ to number of horses and _B_ to the number of bullocks;
+- The indeterminate equation 344H = 265B + 33 must then be true. 
+
+
+```
+function horsesandbulls()
+    for H in 1:500
+        for B in 1:500
+            if 344H == 265B+33
+                println("He must have bought ", H, " horses,")
+                println("and ", B, " bullocks.")
+                println("The horses cost in total \$", 252*344)
+                println("The bulls cost in total \$", 327*265)
+                println("and the difference is \$", 252*344-327*265)
+            end
+        end
+    end
+end
+
+> horsesandbulls()
+He must have bought 252 horses,
+and 327 bullocks.
+The horses cost in total $86688
+The bulls cost in total $86655
+and the difference is $33
+```
+
+
+The smallest number of animals the dealer must have bought is 252 horses and 327 bullocks.

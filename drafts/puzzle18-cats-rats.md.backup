@@ -1,0 +1,26 @@
+#_Cats and Rats_
+
+_A number of cats got together and decided to kill between them 999919 rats. Every cat killed an equal number of rats. Each cat killed more rats than there were cats. How many rats do you think that each cat killed ?_
+
+Solution:
+
+Let's presume that the number of cats will be between 2 and 999, and the number of rats that each cat can kill will be between 1000 and 50000.
+
+```
+function catsandrats()
+    for c in 2:999
+        for r in 1000:50000
+            # if the number of cats times the number of rats
+            # each of them killed equals total number of rats,
+            # and the number of cats is less than the number
+            # of rats each cat killed
+            if c * r == 999919 && c < r
+            print("The number of cats is ", c, " and the number of rats is ", r)
+            end
+        end
+    end
+end
+
+> catsandrats()
+The number of cats is 991 and the number of rats is 1009
+```

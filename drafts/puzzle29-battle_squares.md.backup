@@ -1,0 +1,39 @@
+#_Battle of Hastings Squares_
+
+_Sam Loyd's Battle of Hastings Puzzle
+In the Battle of Hastings that occurred on October 14, 1066 Harold's forces formed 13 similar squares with exactly same number of soldiers in each square._
+
+_When Harold himself joined the fray and was added to the number of his soldiers in those thirteen squares a single huge square could be arranged. How many men there must have been in Harold's force?_
+
+_author: Sam Loyd_
+
+
+Solution:
+
+All we have to do is find some number _x_ which squared, multiplied by thirteen and added of one is a perfect square. 
+
+```
+function battlesquares()
+    for x in 1:1000
+        if string(sqrt((x^2 * 13) + 1))[end]  == '0' && string(sqrt((x^2 * 13) + 1))[end-1] == '.'
+            bigsq = x^2 * 13 + 1
+            bigsqside = trunc(Int,(sqrt(x^2 * 13 + 1)))
+            smsqs = x^2
+            smsqside = x
+            println("Total men in 'a single huge square': ", bigsq)
+            println("With ", bigsqside, " on each side.")
+            println("Number of men on each of the 13 small squares; ", smsqs)
+            println("With ", smsqside, " on each side.")
+        end
+    end
+end
+
+> battlesquares()
+Total men in 'a single huge square': 421201
+with 649 men on each side.
+Number of men on each of the 13 small squares: 32400
+with 180 men on each side.
+```
+
+The answer for the puzzle:
+The total men in Harold's force must have been 421201.

@@ -1,0 +1,58 @@
+#_Order!_
+
+_Write out the numbers from 1 to 20 in words - like this:_
+
+_one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty_
+
+_Now put them in ALPHABETICAL order. Which number stays where it is?_
+
+_Puzzle Author: Stephen Froggatt_
+
+1. Strict solution:
+
+```
+# create a list L
+> L = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+
+> function order(list)
+    ordlist = sort(list)   # use sort() to order the list
+    for i in 1:20
+    	# compare the position of each word in the original list
+    	# with their position in the ordered list
+        if list[i] == ordlist[i]
+            println("The number that did not change position is: ", list[i])
+        end
+    end
+    print("The numbers in alphabetical order: ")
+    for n in ordlist
+        print(n, ", ")
+    end
+end
+
+# > order(L)
+# The number that did not change position is: five
+# The numbers in alphabetical order: eight, eighteen, eleven, fifteen, five, four, fourteen, nine, nineteen, one, seven, seventeen, six, sixteen, ten, thirteen, three, twelve, twenty, two,
+```
+
+2. Generaling the function for any list:
+
+```
+function order2(list)
+    ordlist = sort(list)
+    for i in 1:length(list)
+        if list[i] == ordlist[i]
+            println("This element did not change position: ", list[i])
+        end
+    end
+    print("The ordered list: ")
+    for n in ordlist
+        print(n, ", ")
+    end
+end
+
+# N = [9, 5, 1, 4, 10, 8, 7, 3, 6, 2]
+# > order2(N)
+# This element did not change position: 4
+# This element did not change position: 7
+# The ordered list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+```

@@ -1,0 +1,42 @@
+# _Who Weighs What?_
+
+_Horace likes to save money whenever he can (so that he's got plenty left to buy more food) so when he went swimming with some of his friends he had a clever idea to use the weighing machine to weigh him and his two friends for only one 10c coin!_
+
+_Once the weighing machine has shown a reading the dial can only go down to a lower weight. So this is what Horace did. He and his two friends sorted themselves out in order of weight (they knew that Horace was the heaviest and that Tim was the lightest), and then followed this plan:_
+
+_Horace and Kate put the 10c in and got on the scales.
+The dial showed 85 kg._
+
+_Tim got on and Kate got off.
+The dial went down to 75 kg._
+
+_Kate got back on and Horace got off.
+The dial went down to 60 kg._
+
+_Find the correct individual weights of Horace, Kate and Tim._
+
+_Puzzle Author: Stephen Froggatt_
+
+
+So, let h be the weight of Horace, k that of Kate and t that of Tim:
+
+```
+function weights()
+    for h in 1:85
+        for k in 1:75
+            for t in 1:60
+                if h + k == 85 && h + t == 75 && k + t == 60
+                    println("Horace weighs ", h, " Kg.")
+                    println("Kate weighs ", k, " Kg.")
+                    println("Tim weighs ", t, " Kg.")
+                end
+            end
+        end
+    end
+end
+
+# > weights()
+# Horace weighs 50 Kg.
+# Kate weighs 35 Kg.
+# Tim weighs 25 Kg.       
+```

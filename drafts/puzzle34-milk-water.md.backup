@@ -1,0 +1,80 @@
+#_The Mathematical Milkman_
+
+_The school children were returning to their homes when they met the mathematical milkman, who propounds the following problem:_
+
+_In one of the two cans there is milk which is so rich with cream that it becomes absolutely necessary to dilute it with a little water to make it wholesome._
+
+_Therefore, in the other can there is some pure spring water, now I proceed to pour spring water from can No. 1 into can No. 2 sufficient to double its contents, and then re-pour from No. 2 into No. 1 enough of the mixture to double the contents._
+
+_Then to equalize matters, I again pour from No. 1 into No. 2 to double the contents of No. 2 and find the same number of gallons of milk in each can, although there is one more gallon of water in can No. 2 than there is milk, so I want you to tell me how much more water than milk is there in can No. 1?_
+
+_author: Sam Loyd_
+
+
+To get to the solution we need to do first do some math thinking.(a)
+
+1. Suppose that in the beginning there was x gallons of spring water in Can 1 and y gallons of milk in Can 2:
+
+- After doubling contents of Can 2:
+
+Can 1 -> water=x-y, milk=0, total=x-y
+Can 2 -> water=y, milk=y, total=2y
+
+- Next, after doubling the contents of Can 1:
+
+Can 1 -> water=2(3/4(x-y)), milk=2(1/4(x-y)), total=2(x-y)
+Can 2 -> water=1/2(3y-x), milk=1/2(3y-x), total=2y-(x-y) i.e. 3y-x
+
+- Finally, after doubling the contents of Can 2 again:
+
+**Can 1 -> total=2(x-y)-(3y-x) i.e. 3x-5y, water=3/4(3x-5y), milk=1/4(3x-5y)**
+**Can 2 -> total=2(3y-x), water=5/4(3y-x), milk=3/4(3y-x)**
+
+2. Now, we are told that there are _the same number of gallons of milk in each can_. So, copying from above:
+
+- 1/4(3x-5y) = 3/4(3y-x)
+
+3. We are also told that _there is one more gallon of water in can No. 2 than there is milk_, that is (also copying from 1.):
+
+- 5/4(3y-x) = 3/4(3y-x)+1
+
+4. We can now calculate the values of _x_ (gallons of water in the beginning, in can No. 1) and _y_ (gallons of milk in the beginning, in can No. 2):
+
+```
+function waterandmilk()
+    for x in 1:20
+        for y in 1:20
+            if 1/4*(3x-5y) == 3/4*(3y-x) && 5/4*(3y-x) == 3/4*(3y-x)+1
+                println("In the beginning there were:")
+                println(x, " gallons of water in can No. 1")
+                println(y, " gallons of milk in can No. 2")
+            end
+        end
+    end
+end
+
+> waterandmilk()
+In the beginning there were:
+7 gallons of water in can No. 1
+3 gallons of milk in can No. 2
+```
+
+5. Last, to answer the final question - _how much more water than milk is there in can No. 1_ - we must go back to the equations for the gallons of water and milk in Can 1 after all the mixings and calculate their difference:
+
+```
+# Can 1: water=3/4(3x-5y)
+> (3/4)*(3*7-5*3)
+4.5
+# Can 1: milk=1/4(3x-5y)
+> (1/4)*(3*7-5*3)
+1.5
+# difference
+> 4.5-1.5
+3.0
+```
+
+
+The answer for the puzzle:
+There is 3 more gallons of water than milk in can No. 1
+
+(a) Disclaimer: I am not the author of the mathematics for the puzzle solution. I can only presume that the author must have been one of the following persons: Les Bill Gates, Dianne Gentry, David Sevilla or Jesus Ernesto Montes.

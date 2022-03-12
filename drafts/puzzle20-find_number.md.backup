@@ -1,0 +1,35 @@
+#_Find the Big Number_
+
+_ What 5 - digit number has the following features :_
+
+_If we put the numeral 1 at the beginning, we get a number three times smaller than if we put the numeral 1 at the end of the number?_
+
+Let's do some thinking and see this graphically:
+
+- 1abcde * 3 = abcde1
+- Notice that the 1 in 1abcde is in the 6th position to the left. So, 1abcde = 100000 + abcde
+- In the same way, the 1 in abcde1 is in the 1st position on the right. So, abcde1 = abcde + 1
+- Now let's replace the series of unknown digits abcde by A
+- And we can write it as (100000 + A) * 3 = 10 * A + 1
+
+All we need to know is the what 5 digits number A represents.
+
+Solution:
+
+```
+function findnumber()
+    for A in 1:99999
+        if 3 * (100000+A) == A * 10 + 1
+            print(A)
+        end
+    end
+end
+
+> findnumber()
+42857
+
+# Check if it is true
+> 3 * 142857
+428571
+```
+

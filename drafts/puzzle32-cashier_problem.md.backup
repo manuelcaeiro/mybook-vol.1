@@ -1,0 +1,36 @@
+#_The Cashier's Problem_
+
+_An old man goes to a bank with a check of $200 and asks the cashier "Give me some one-dollar bills, ten times as many twos and the balance in fives!"._
+
+_What will the cashier do?_
+
+_author: Sam Loyd_
+
+
+Solution:
+
+Because the balance is in 'fives', the subtotal of 'ones' and 'twos' must be a multiple of 5, and there is only one number that fulfils that condition in the given interval 1 to 200.
+
+
+```
+function condcashdraw()
+    for x in 1:20
+        for y in 1:50
+            if x*(1+20) % 5 == 0 && x*(1+20) + y*(5) == 200
+                println("\$1 bills:  ", x)
+                println("\$2 bills: ", x*10)
+                println("\$5 bills: ", y)
+            end
+        end
+    end
+end
+
+> condcashdraw()
+$1 bills:  5
+$2 bills: 50
+$5 bills: 19
+```
+
+
+The answer for the puzzle:
+The cashier shall give the man five $1 bills, fifty $2 bills and nineteen $5 bills; 5 + (50 x 2) + (19 x 5) = 5 + 100 + 95 = 200 dollars.

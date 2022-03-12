@@ -1,0 +1,30 @@
+#_Pencils and Jars_
+
+_I have some pencils and some jars._
+
+_If I put 9 pencils into each jar I will have two jars left over._
+
+_If I put 6 pencils into each jar I will have three pencils left over._
+
+_How many pencils and how many jars?_
+
+
+Solution:
+
+```
+function pencilsonjars()
+    for p in 1:100
+        for j in 1:50
+            if p/9 == j-2 && (p-3)/6 == j
+                print(p, " pencils and ", j, " jars.")
+            end
+        end
+    end
+end
+
+> pencilsonjars()
+45 pencils and 7 jars.
+```
+
+
+There are 45 pencils and 7 jars.

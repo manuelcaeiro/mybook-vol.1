@@ -1,0 +1,40 @@
+#_E.T. Headers & Leggers_
+
+_On the planet Glogg, the inhabitants are similar to human beings, however they differ in one respect:_
+
+_- they either have 3 heads and the usual number of arms and legs (known as "headers") OR_
+
+_- they have one head and 3 legs and 3 arms (known as "leggers")._
+
+_Last week, I was talking to a group of friends from the planet and between them they had 15 heads and 48 limbs._
+
+_How many headers and how many leggers were there?_
+
+_Puzzle Author: Stephen Froggatt_
+
+To find the solution for this puzzle we have to do a little math first and try to formulate two suitable equations:
+
+- We know that for each head of a "legger"  the total he (L) there are three heads of a "header" (H), and that the total number of heads is 15.
+
+L + (3 x H) = 15
+
+- we also know that for each four limbs of a "header" there are six limbs of a "legger", and the total number of limbs is 48.
+
+(4 x H) + (6 x L) = 48
+
+
+```
+function countET()
+    for L in 1:10
+        for H in 1:10
+            if 3 * H + L == 15 && 4 * H + 6 * L == 48
+                print("Headers: ", H, ", ", "Leggers: ", L)
+            end
+        end
+    end
+end
+    
+# > countET()
+# Headers: 3, Leggers: 6
+```
+

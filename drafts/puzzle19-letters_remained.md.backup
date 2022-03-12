@@ -1,0 +1,57 @@
+#_Letters that didn't change place_
+
+_Which letters of the word FEEBLE will remain in the same place if they are sorted in alphabetical order?_
+
+1. Strict solution:
+
+```
+function lettersremain()
+    wrd = "FEEBLE"
+    arr = collect(wrd)
+    sarr = sort(arr)
+    println("Original word: ", String(arr))
+    println("Sorted word:   ", String(sarr))
+    print("Letters in the same place: ")
+    for i in 1:length(arr)
+        if arr[i] == sarr[i]
+            print(arr[i])
+        end
+    end
+end
+
+> lettersremain()
+Original word: FEEBLE
+Sorted word:   BEEEFL
+Letters in the same place: EE
+```
+
+2. However, with only one word is very uninteresting, right? Let's generalize the function so we can do it with other, longer and more interesting, words as, for example, abracadabra or supercalifragilisticexpialidocious*.
+
+```
+function lettersremain2(wrd)
+    arr = collect(wrd)
+    sarr = sort(arr)
+    println("Original word: ", String(arr))
+    println("Sorted word:   ", String(sarr))
+    print("Letters in the same place: ")
+    for i in 1:length(arr)
+        if arr[i] == sarr[i]
+            print(arr[i])
+        end
+    end
+end
+
+> word = "abracadabra"
+> lettersremain2(word)
+Original word: abracadabra
+Sorted word:   aaaaabbcdrr
+Letters in the same place: aar
+> word = "supercalifragilisticexpialidocious"
+> lettersremain2(word)
+Original word: supercalifragilisticexpialidocious
+Sorted word:   aaacccdeefgiiiiiiillloopprrssstuux
+Letters in the same place: cfiiu
+```
+
+
+* "Supercalifragilisticexpialidocious" is a song from the Disney musical film Mary Poppins.

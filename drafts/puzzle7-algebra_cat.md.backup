@@ -1,0 +1,25 @@
+#_Find the numbers (2)_
+
+_Solve the following knowing that each letter is a different digit._
+
+CAT = (C + A + T) x C x A x T
+
+
+```
+function findCAT()
+    for n in 100:999  
+        s = string(n)               
+        if n == (parse(Int64,s[1]) + parse(Int64,s[2]) + parse(Int64,s[3])) * parse(Int64,s[1]) * parse(Int64,s[2]) * parse(Int64,s[3]) 
+            println(n)
+        end
+    end
+end
+
+# > findCAT()
+# 135
+# 144
+
+#Let's test one of the results
+# > (1 + 3 + 5) * 1 * 3 * 5
+# 135
+```

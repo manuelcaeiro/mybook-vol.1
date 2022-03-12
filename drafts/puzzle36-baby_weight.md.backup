@@ -1,0 +1,37 @@
+#_Weighing the Baby_
+
+_How much does the baby weigh if the mother weighs 100 pounds more than the combined weight of the baby and the dog, and the dog weighs 60 percent less than the baby?_
+
+_author: Sam Loyd_
+
+
+1. A little mathematical thinking first:
+
+- Be _w_ the mother's weight, _b_ the baby's weight, and _d_ the dog's weight.
+- So, all summed weights are equal to 170 pounds, w+b+c=170, and mother's weight is the sum of the baby's and the dog's weights plus 100 pounds, w=b+d+100.
+- Replacing w in the 1st equation with its value in the 2nd equation we get (b+d+100)+b+d=170. Simplifying, 2b+2d=170-100 i.e. 2b+2d=70
+- We are also told that the dog's weight is 60% less than the baby's weight, i.e. b/d=3/2.
+
+2. Now for the code:
+
+```
+function babyweight()
+    for b in 1:50
+        for d in 1:30
+            if 2b+2d == 70 && b/d == 3/2
+                println("The baby weighs ", b, " pounds.")
+                println("The dog weighs ", d, " pounds.")
+                println("The mother weighs ", 100+b+d, " pounds.")
+            end
+        end
+    end
+end
+
+> babyweight()
+The baby weighs 21 pounds.
+The dog weighs 14 pounds.
+The mother weighs 135 pounds.
+```
+
+
+The answer for the puzzle: The baby weighs 21 pounds.

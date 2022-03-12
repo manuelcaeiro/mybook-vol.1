@@ -1,0 +1,53 @@
+# _Puzzling Legacies_
+
+_A man bequeathed a sum of money, a little less than £1,500, to be divided as follows:_
+
+_The five children and the lawyer received such sums that the square root of the eldest son's share, the second son's share divided by two, the third son's share plus £2, the fourth son's share minus £2, the daughter's share multiplied by 2, and the square of the lawyer's fee all worked out to at exactly the same sum of money._
+
+_No pounds were divided, and no money was left over after the division. What was the total amount bequeathed?_
+
+_author: H. Dudeney_
+
+
+Solution:
+
+- Say that the amounts to be received were _E_ by the eldest son, _S_ by the second son, and _L_ by the lawyer;
+- It is said that _the square root of the eldest son's share_ is equal to _the second son's share divided by two_, i.e. sqrt(E)=S/2;
+- It is also said that _the second son's share divided by two_ is equal to _the square of the lawyer's fee_, i.e. S/2=L^2 which is the same as S=2*(L^2);
+- All the other values can be extrapolated from these.
+
+
+```
+function dividelegacy()
+    println("The bequeathed money was divided the following way:")
+    for E in 1000:1500
+        for S in 10:100
+            for L in 1:50
+                if sqrt(E) == S/2 && S == 2*(L^2)
+                    println("Eldest son, £", E)
+                    println("Second son, £", S)
+                    println("Third son, £", L^2+2)
+                    println("Fourth son, £", L^2-2)
+                    println("Daughter, £", floor(Int, S/4))
+                    println("Lawyer, £", L, "\n")
+                    println("And the total was £", E+S+(L^2+2)+(L^2-2)+floor(Int,S/4)+L)
+                end
+            end
+        end
+    end
+end
+
+> dividelegacy()
+The bequeathed money was divided the following way:
+Eldest son, £1296
+Second son, £72
+Third son, £38
+Fourth son, £34
+Daughter, £18
+Lawyer, £6
+
+And the total was £1464
+```
+
+
+The answer for the puzzle: The total amount bequeathed was £1464.

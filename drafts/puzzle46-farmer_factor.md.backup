@@ -1,0 +1,42 @@
+#_Farmer Factor_
+
+_Farmer Factor (who lives at Fraction Farm) wants to stock up on feed for his three types of animals (chickens, pigs, cows)._
+
+_His goal is to spend all of the $100 and get exactly 100 bags altogether to fill up his cart._
+
+_Naturally, each type of animal food is a different price. How does he spend his money?_
+
+_Puzzle author: Stephen Froggatt_
+
+
+Solution:
+
+- Let _c_ be the number of bags of chicken food, _p_ the number of bags of pig food and _C_ the number of bags of cow food. Half of the total number of bags of animal food is 50, so 0.5xc+0.5xp+0.5xC=50 bags;
+- Taking the prices for each kind of food-bag and the total spent being $100, then $5xc+$3xp+0.5xC=$100.
+
+
+```
+function foodbags()
+    for c in 1:100
+        for p in 1:100
+            for C in 1:100
+                if 5c+3p+0.5C == 100 && 0.5c+0.5p+0.5C == 50
+                    println(c, " chicken food bags, amounting \$", 5c)
+                    println(p, " pig food bags, amounting \$", 3p)
+                    println(C, " cow food bags, amounting \$", Int(0.5C))
+                    println("Total bags: ", c, "+", p, "+", C, "=", c+p+C)
+                    println("Total price: ", 5c, "+", 3p, "+", Int(0.5C), "=\$", 5c+3p+0.5C)
+                    return
+                end
+            end
+        end
+    end
+end
+
+> foodbags()
+5 chicken food bags, amounting $25
+11 pig food bags, amounting $33
+84 cow food bags, amounting $42
+Total bags: 5+11+84=100
+Total price: 25+33+42=$100.0
+```
