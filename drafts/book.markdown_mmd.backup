@@ -1,0 +1,2686 @@
+
+
+# rights
+
+50 Math Puzzles: Solved using functional Julia, by Ace Alumni Ore
+
+Copyright© 2022 J. Manuel Caeiro D. P.
+
+All rights reserved. No portion of this book may be reproduced or modified in any form without permission from the publisher. For permissions contact:
+arquiviva\[at\]tutanota\[dot\]com
+[Limitations and Exceptions](https://www.wipo.int/copyright/en/faq_copyright.html)
+
+Identifier: github.com/manuelcaeiro/mybook-vol.1
+
+UUID: 51bfdee1-bca1-4efe-8e1c-e40cf468153d
+
+Cover image by \[Yew Hui Tan\]([https://www.pexels](https://www.pexels.com/@mryewhui), source: [Pexels](https://www.pexels.com/license/)
+
+
+# dedicated
+
+<h5 style="text-align:right;">To my parents.</h5>
+
+---------
+
+*Intro*
+=======
+
+Dear reader,
+
+The purpose of this book is to share some amusement by showing how mathematical puzzles can be solved using Julia programming language.
+
+If your intention is to [learn](https://juliaacademy.com/courses), or [deepen your learning](https://www.linuxlinks.com/excellent-free-books-learn-julia/) of Julia there are excellent free resources available. The same way, if you intend to [learn](https://schoolyourself.org/) or [deepen your learning](https://www.openculture.com/free-math-textbooks) of mathematics there are hundreds of free courses and books attainable.
+
+For this first volume were chosen mainly easy and medium difficulty (along with a couple of more difficult) puzzles, just to warm up for the second volume which is planned to contain some original problems. The author resisted the temptation of ordering the problems by it's (theoretical) degree of difficulty trying to avoid the reader getting to some page where he gives up, as frequently happens. This way, hopefully the reader turns the page, finds an easier puzzle, and gets to the end of the book.
+
+The versions of Julia used to write the code were 1.4.1, 1.5.3, and 1.7.1.
+
+As [Edsger W. Dijkstra](https://en.wikipedia.org/wiki/Edsger_W._Dijkstra) said, "There should be no such thing as boring mathematics."
+
+"Mathematics knows no races or geographic boundaries; for mathematics, the cultural world is one country", stated [David Hilbert](https://en.wikipedia.org/wiki/David_Hilbert).
+
+[Shakuntala Devi](https://en.wikipedia.org/wiki/Shakuntala_Devihttps://en.wikipedia.org/wiki/Shakuntala_Devi) puts it this way: "What is mathematics? It is only a systematic effort of solving puzzles posed by nature."
+
+Have fun.
+
+<p style="text-align:right;">Ace Alumni Ore</p>
+# _Twelve Days of Christmas_
+
+*According to the traditional song, on the first day of Christmas (25th
+December), my true love sent to me:*
+
+• A partridge in a pear tree
+
+*On the second day of Christmas (26th December), my true love sent to me
+THREE presents:*
+
+• Two turtle doves • A partridge in a pear tree
+
+*On the third day of Christmas (27th December and so on) my true love
+sent to me SIX presents:*
+
+• Three French hens • Two turtle doves • A partridge in a pear tree
+
+*This carries on until the the twelfth day of Christmas, when my true
+love sends me:*
+
+• Twelve drummers drumming • Eleven pipers piping • Ten lords a-leaping
+• Nine ladies dancing • Eight maids a-milking • Seven swans a-swimming •
+Six geese a-laying • Five gold rings • Four calling birds • Three French
+hens • Two turtle doves • A partridge in a pear tree
+
+*After the twelve days of Christmas are over, how many presents has my
+true love sent me altogether?*
+
+*Puzzle Author: Stephen Froggatt*
+
+1.  Strict, hard coded, solution:
+
+<!-- -->
+
+    function allgifts()
+        dg = []   # daily gifts storage
+        for d in 1:12
+            d = sum(1:d)   # daily gifts from day 1 to 12
+            push!(dg, d)   # storing each day gifts
+        end
+        print(sum(dg))   # showing total number of gifts in storage
+    end
+
+    > allgifts()
+    364
+
+1.  Generalizing the function for any number of days:
+
+<!-- -->
+
+    function allgifts2(days)
+        dg = []   # daily gifts storage
+        for d in 1:days
+            d = sum(1:d)   # daily gifts from day 1 to days
+            push!(dg, d)   # storing each day gifts
+        end
+        print(sum(dg))   # showing total number of gifts in storage
+    end
+
+    # There are actually 13 days from 25 Dec to 6 Jan
+    # Let's add to the list Thirteen puzzlers puzzling
+    > allgifts(13)
+    455
+
+[Twelve Days of
+Christmas](https://en.wikipedia.org/wiki/Twelve_Days_of_Christmas)
+
+*Alphabet Numbers*
+==================
+
+*Using any letter only once, what are the largest and smallest numbers
+that you can write down in words?*
+
+*Puzzle Author: Stephen Froggatt*
+
+1.  In order to solve directly this puzzle one would need a huge list of
+    number names. So, let's try a different approach. You think of a big
+    number name that seems to fit the puzzle rule (any letter only once)
+    and then test it using the function bellow:
+
+<!-- -->
+
+    function repeatedletters(str)   
+        compare = Set(str) # eliminate repeated characters
+        
+        # difference between string and set lengths = repeated chars
+        dif = length(str) - length(compare)
+        if dif != 0
+            return "There are $dif repeated letters in $str."
+        else
+            return "There are no repeated letters in $str."
+        end
+    end
+
+    > repeatedletters("four thousand")
+    "There are 2 repeated letters in four thousand."
+    > repeatedletters("five thousand")
+    "There are no repeated letters in five thousand."
+
+1.  However, as you may have noticed, there is a problem with the
+    previous code; you can only use 2 word names. If you use 3 word
+    names (five thousand two, for example) the function will count the
+    spaces between words as a repeated character. So, we need a more
+    general function that eliminates the empty spaces on the string of
+    words of you number name:
+
+<!-- -->
+
+    function repeatedletters2(str)
+        joined = filter(char -> !isspace(char), str) # take out spaces
+        compare = Set(joined) 
+        dif = length(joined) - length(compare)
+        if dif != 0
+            return "There are $dif repeated letters in $str."
+        else
+            return "There are no repeated letters in $str."
+        end
+    end
+
+    > repeatedletters2("The quick brown")
+    "There are no repeated letters in The quick brown."
+    > repeatedletters2("The quick brown fox")
+    "There are 1 repeated letters in The quick brown fox."
+
+*Magic Encryption*
+==================
+
+*Father Christmas spends 364 days of the year as a taster of Christmas
+puddings (which is why he is so round and jolly). Recently he came
+across a Magic Pudding.*
+
+*If you eat some of this pudding, the next thing you say comes out in a
+magic code.*
+
+*Father Christmas tried it, liked it, and said:*
+
+*"IP! IP! IP! XIBU B MPWFMZ QVEEJOH! NFSSZ DISJTUNBT BOE B IBQQZ OFX
+ZFBS UP ZPV BMM!"*
+
+*What did he say?*
+
+*Puzzle Author: Stephen Froggatt*
+
+Previous note: This will be a little long explanation but I promise it
+will be worth. :)
+
+1.  Have you noticed that when you replace each letter in "IP! IP! IP!"
+    with the previous letter in the alphabet you obtain "OH! OH! OH!"?
+    :) Here's a Julia function to decrypt strictly what Father Christmas
+    said:
+
+<!-- -->
+
+    function decrypt(text)
+        decrypted = ""
+        for l in text
+            numl = Int(l)
+            if numl in  65:90 || numl in 97:122
+                numl = numl - 1
+                decrypted = decrypted * Char(numl)
+            else
+                decrypted = decrypted * Char(numl)
+            end
+        end
+        return decrypted
+    end
+
+    # > text = "IP! IP! IP! XIBU B MPWFMZ QVEEJOH! NFSSZ DISJTUNBT BOE B IBQQZ OFX ZFBS UP ZPV BMM!"
+    # > decrypt(text)
+    # "HO! HO! HO! WHAT A LOVELY PUDDING! MERRY CHRISTMAS AND A HAPPY NEW YEAR TO YOU ALL!"
+
+1.  Actually, this way of changing a text by replacing each letter with
+    another letter some fixed number of positions down the alphabet is
+    known as [Caeser
+    cipher](https://en.wikipedia.org/wiki/Caesar_cipher). More fun than
+    just decrypt what Santa said is to be able to encrypt (and decrypt)
+    any text you choose, using only a numeric key from 1 to 25(a). Let's
+    see how it can be easily done:
+
+<!-- -->
+
+    function csrcipher(text, key)
+        # empty string to take the encrypted text
+        ciphtext = ""
+        for l in text   # pick each letter...
+            # ... and turn it into correspondent number
+            numl = Int(l)
+            # sum key and letter number
+            ciphnuml = numl + key
+            # ascii interval for the 26 capital letters
+            if numl in 65:90    
+                # if the result is bigger than number of letter Z...
+                if ciphnuml > 90    
+                    # ... go back to A; it's called rotation
+                    rotciphnuml = ciphnuml - 26
+                    # rotated encrypted letter into the result string
+                    # * is used for concatenation
+                    ciphtext = ciphtext * Char(rotciphnuml)
+                else
+                    # encrypted letter into the result string
+                    ciphtext = ciphtext * Char(ciphnuml)
+                end
+            # ascii interval for 26 lower letters
+            elseif numl in 97:122
+                if ciphnuml > 122
+                    rotciphnuml = ciphnuml - 26
+                    ciphtext = ciphtext * Char(rotciphnuml)
+                else
+                    ciphtext = ciphtext * Char(ciphnuml)
+                end
+            else
+                ciphtext = ciphtext * Char(numl)
+            end
+        end
+        return ciphtext   # the result encrypted text
+    end
+
+    > text = "Magic Encryption"; key = 13
+    > csrcipher(text, key)
+    "Zntvp Rapelcgvba"
+
+\(a) Try key = 26 and see what happens. :)
+
+Now you will want to decrypt the encrypted text. The function to decrypt
+the text is very much like the one to encrypt it - with just some small
+differences.
+
+    function csrdcipher(text, key)
+        dciphtext = ""
+        for l in text
+            numl = Int(l)
+            dciphnuml = numl - key
+            if numl in 65:90
+                if dciphnuml < 65
+                    rotdciphnuml = dciphnuml + 26
+                    dciphtext = dciphtext * Char(rotdciphnuml)
+                else
+                    dciphtext = dciphtext * Char(dciphnuml)
+                end
+            elseif numl in 97:122
+                if dciphnuml < 97
+                    rotdciphnuml = dciphnuml + 26
+                    dciphtext = dciphtext * Char(rotdciphnuml)
+                else
+                    dciphtext = dciphtext * Char(dciphnuml)
+                end
+            else
+                dciphtext = dciphtext * Char(numl)
+            end
+        end
+        return dciphtext
+    end
+
+    > text = "Zntvp Rapelcgvba"; key = 13
+    > csrdcipher(text, key)
+    "Magic Encryption"
+
+1.  Now, if you want to encrypt a text in a language that uses a
+    different alphabet (like Greek or Chinese) or a language that has
+    accented letters (like French or Spanish), the previous code will
+    not work. But Julia language uses
+    [Unicode](https://en.wikipedia.org/wiki/Unicode), which defines more
+    than 144 thousand characters for many, many languages. So, we can
+    write a plain function that allows this same kind of simple
+    encryption/decryption for almost any language, even if without
+    rotation.
+
+<!-- -->
+
+    function ampcsrcipher(text, key)
+        ciphtext = ""
+        for c in text
+                numc = Int(c)
+                ciphnumc = numc + key
+                ciphtext = ciphtext * Char(ciphnumc)
+            end
+            return ciphtext
+    end
+
+    > ampcsrcipher("Père Noël", 13)
+    "]õ\x7fr-[|øy"
+    > ampcsrcipher("]õ\x7fr-[|øy", -13)
+    "Père Noël"
+    > ampcsrcipher("Άι Βασίλη", 14)
+    "Δχ.Ποϑνωυ"
+    > ampcsrcipher("Δχ.Ποϑνωυ", -14)
+    "Άι Βασίλη"
+
+As you can see, to decrypt the encrypted text you just use the same
+function and the key with the opposite sign.
+
+*Order!*
+========
+
+*Write out the numbers from 1 to 20 in words - like this:*
+
+*one, two, three, four, five, six, seven, eight, nine, ten, eleven,
+twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen,
+nineteen, twenty*
+
+*Now put them in ALPHABETICAL order. Which number stays where it is?*
+
+*Puzzle Author: Stephen Froggatt*
+
+1.  Strict solution:
+
+<!-- -->
+
+    # create a list L
+    > L = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+
+    > function order(list)
+        ordlist = sort(list)   # use sort() to order the list
+        for i in 1:20
+            # compare the position of each word in the original list
+            # with their position in the ordered list
+            if list[i] == ordlist[i]
+                println("The number that did not change position is: ", list[i])
+            end
+        end
+        print("The numbers in alphabetical order: ")
+        for n in ordlist
+            print(n, ", ")
+        end
+    end
+
+    # > order(L)
+    # The number that did not change position is: five
+    # The numbers in alphabetical order: eight, eighteen, eleven, fifteen, five, four, fourteen, nine, nineteen, one, seven, seventeen, six, sixteen, ten, thirteen, three, twelve, twenty, two,
+
+1.  Generaling the function for any list:
+
+<!-- -->
+
+    function order2(list)
+        ordlist = sort(list)
+        for i in 1:length(list)
+            if list[i] == ordlist[i]
+                println("This element did not change position: ", list[i])
+            end
+        end
+        print("The ordered list: ")
+        for n in ordlist
+            print(n, ", ")
+        end
+    end
+
+    # N = [9, 5, 1, 4, 10, 8, 7, 3, 6, 2]
+    # > order2(N)
+    # This element did not change position: 4
+    # This element did not change position: 7
+    # The ordered list: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+
+*Smarties' Groups*
+==================
+
+*The Birthday Cake has all gone but there are twelve piles of Smarties
+left. Each pile is held together by icing so can't be split up. Most of
+the guests have gone, but Hungry Horace and his two friends want to
+share out the Smarties equally.*
+
+To solve this puzle two previous assumptions must be made:
+
+1.  That the twelve groups of smarties are an [arithmetic
+    progression](https://en.wikipedia.org/wiki/Arithmetic_progression#Sum);
+2.  That [pairwise addition of terms from opposite ends of the list
+    yielded identical intermediate
+    sums](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss#Anecdotes).
+
+<!-- -->
+
+    # calculate total number of smarties and divide it by three
+    12 * (12 + 1) / 2 = 78   # total
+    78 / 3 = 26   # for each friend
+
+    # in Julia, create a named tuple naming each group of smarties
+    ntuple = namedtuple = (fir=1, sec=2, thi=3, fou=4, fif=5, six=6, sev=7, eig=8, nin=9, ten=10, ele=11, twe=12)
+
+Notice the sum of first (fir) and twelfth (twe) is equal to the sum of
+eleventh (ele) and second (sec) and so on, and all are equal to 13. And
+13 is half of 26 (you got the idea).
+
+    function groups(nt)
+        hungryH = nt.twe + nt.fir + nt.ele + nt.sec
+        friend1 = nt.ten + nt.thi + nt.nin + nt.fou
+        friend2 = nt.eig + nt.fif + nt.sev + nt.six
+        println("hungryH got ", nt.twe, "+", nt.fir, "+", nt.ele, "+", nt.sec, "=", hungryH)
+        println("friend1 got ", nt.ten, "+", nt.thi, "+", nt.nin, "+", nt.fou, "=", friend1)
+        println("friend2 got ", nt.eig, "+", nt.fif, "+", nt.sev, "+", nt.six, "=", friend2)
+        end
+        
+    # > groups(ntuple)
+    # hungryH got 12+1+11+2=26
+    # friend1 got 10+3+9+4=26
+    # friend2 got 8+5+7+6=26
+
+*Find the numbers (1)*
+======================
+
+ABCD × E = DCBA
+
+*Replace letters with digits and have the answer be true. A,B,C,D and E
+are all different digits.*
+
+    function findABCDxE()
+        # all 4 digit numbers
+        for n in 1000:9999
+            # 1 is neutral element of multiplication (a)
+            for m in 2:9
+                s = string(n)   # turn n into a string...
+                r = reverse(s)   # ... so you can reverse it
+                # turn the reversed string into a number
+                p = parse(Int64, r)
+                # another way of saying ABCD x E = DCBA
+                if n * m == p
+                    println(n, "*", m, "=", p)
+                end
+            end
+        end
+    end
+        
+    # > findABCDxE()
+    # 1089*9=9801
+    # 2178*4=8712
+
+\(a) Multiplying by 1 would return as results the (long) list of all
+symetric numbers, from 1001 to 9999, and we don't want that.
+
+*Find the numbers (2)*
+======================
+
+*Solve the following knowing that each letter is a different digit.*
+
+CAT = (C + A + T) x C x A x T
+
+    function findCAT()
+        for n in 100:999  
+            s = string(n)               
+            if n == (parse(Int64,s[1]) + parse(Int64,s[2]) + parse(Int64,s[3])) * parse(Int64,s[1]) * parse(Int64,s[2]) * parse(Int64,s[3]) 
+                println(n)
+            end
+        end
+    end
+
+    # > findCAT()
+    # 135
+    # 144
+
+    #Let's test one of the results
+    # > (1 + 3 + 5) * 1 * 3 * 5
+    # 135
+
+*Birds on Trees*
+================
+
+*There are 2 trees in a garden (tree "A" and "B") and on the both trees
+are some birds.*
+
+*The birds of tree A say to the birds of tree B that if one of you comes
+to our tree, then our population will be the double of yours.*
+
+*Then the birds of tree B tell to the birds of tree A that if one of you
+comes here, then our population will be equal to that of yours.*
+
+*How many birds are there on each tree?*
+
+    function birdsOnTrees()
+        for n in 1:10
+            for m in 1:10
+                if (n+1) == 2*(m-1) && (m+1) == (n-1)
+                    print("Tree A: ", n, " birds", ", ", "Tree B: ", m, " birds")
+                end
+            end
+        end
+    end
+
+    # > birdsOnTrees()
+    # Tree A: 7 birds, Tree B: 5 birds
+
+*E.T. Headers & Leggers* 
+========================
+
+*On the planet Glogg, the inhabitants are similar to human beings,
+however they differ in one respect:*
+
+*- they either have 3 heads and the usual number of arms and legs (known
+as "headers") OR*
+
+*- they have one head and 3 legs and 3 arms (known as "leggers").*
+
+*Last week, I was talking to a group of friends from the planet and
+between them they had 15 heads and 48 limbs.*
+
+*How many headers and how many leggers were there?*
+
+*Puzzle Author: Stephen Froggatt*
+
+To find the solution for this puzzle we have to do a little math first
+and try to formulate two suitable equations:
+
+-   We know that for each head of a "legger" the total he (L) there are
+    three heads of a "header" (H), and that the total number of heads
+    is 15.
+
+L + (3 x H) = 15
+
+-   we also know that for each four limbs of a "header" there are six
+    limbs of a "legger", and the total number of limbs is 48.
+
+(4 x H) + (6 x L) = 48
+
+    function countET()
+        for L in 1:10
+            for H in 1:10
+                if 3 * H + L == 15 && 4 * H + 6 * L == 48
+                    print("Headers: ", H, ", ", "Leggers: ", L)
+                end
+            end
+        end
+    end
+        
+    # > countET()
+    # Headers: 3, Leggers: 6
+
+*Kate's and Son's ages*
+=======================
+
+*5 years ago Kate was 5 times as old as her Son.*
+
+*In 5 years her age will be 8 less than three times her Son's age at
+that time.*
+
+*How old are Kate and her Son now?*
+
+*Puzzle Author: Stephen Froggatt*
+
+Let K and S be the ages of Kate and her son at present.
+
+So, Kate's age five years ago was five times her son's age five years
+ago:
+
+K - 5 = (S - 5) \* 5
+
+And Kate's age in five years will be three times her son's age in five
+years minus eight:
+
+K + 5 = (S + 5) \* 3 - 8
+
+    function relativeAges()
+        for K in 1:50
+            for S in 1:25
+                if K - 5 == (S - 5) * 5 && K + 5 == (S + 5) * 3 - 8
+                    print("Kate's age is ", K, " | ", "Son's age is ", S)
+                end
+            end
+        end
+    end
+        
+    # > relativeAges()
+    # Kate's age is 35 | Son's age is 11
+
+*Who Weighs What?*
+==================
+
+*Horace likes to save money whenever he can (so that he's got plenty
+left to buy more food) so when he went swimming with some of his friends
+he had a clever idea to use the weighing machine to weigh him and his
+two friends for only one 10c coin!*
+
+*Once the weighing machine has shown a reading the dial can only go down
+to a lower weight. So this is what Horace did. He and his two friends
+sorted themselves out in order of weight (they knew that Horace was the
+heaviest and that Tim was the lightest), and then followed this plan:*
+
+*Horace and Kate put the 10c in and got on the scales. The dial showed
+85 kg.*
+
+*Tim got on and Kate got off. The dial went down to 75 kg.*
+
+*Kate got back on and Horace got off. The dial went down to 60 kg.*
+
+*Find the correct individual weights of Horace, Kate and Tim.*
+
+*Puzzle Author: Stephen Froggatt*
+
+So, let h be the weight of Horace, k that of Kate and t that of Tim:
+
+    function weights()
+        for h in 1:85
+            for k in 1:75
+                for t in 1:60
+                    if h + k == 85 && h + t == 75 && k + t == 60
+                        println("Horace weighs ", h, " Kg.")
+                        println("Kate weighs ", k, " Kg.")
+                        println("Tim weighs ", t, " Kg.")
+                    end
+                end
+            end
+        end
+    end
+
+    # > weights()
+    # Horace weighs 50 Kg.
+    # Kate weighs 35 Kg.
+    # Tim weighs 25 Kg.       
+
+*Smallest Common Dividend*
+==========================
+
+*What is the smallest number which when divided by 35 leaves remainder
+30 ,when divided by 45 leaves remainder 40 and when divided by 55 leaves
+remainder 50?*
+
+1.  Strict solution:
+
+<!-- -->
+
+    function smallestCommDiv()
+        for n in 1:10000
+            if n % 35 == 30 && n % 45 == 40 && n % 55 == 50
+                print("The smallest common dividend is ", n)
+                break
+            end
+        end
+    end
+
+    # > smallestCommDiv()
+    # The smallest common dividend is 3460
+
+*Swim Speed*
+============
+
+*If Sarah can swim 4 kilometre downstream (with the current) in a river
+in 30 minutes, & upstream 1.6 kilometre (against the current) in 15
+minutes, how long would it take her to swim 1 Kilometre in still water?*
+
+Let's take this question to exemplify a more general way of using code
+to solve mathematics puzzles, which will allow to solve other puzzles
+about speed and average speed.
+
+1.  Start by calculating the partial speeds (in Km/hour) from the known
+    distances and times.
+
+<!-- -->
+
+    function speed(dist, time)
+        # input distance in Kilometers and time in minutes
+        # to get Km/h
+        speed = (60 * dist) / time
+        print(speed, " Km/h")
+    end
+
+    # > speed(4, 30)
+    # 8.0 Km/h
+    # > speed(1, 15)
+    # 4.0 Km/h
+
+1.  Now let's use the function bellow to calculate Sarah's average
+    speed, which shall probably be the speed in still water.
+
+<!-- -->
+
+    function average(a, b, x...)
+        speeds = (a, b, x...)
+        average = sum(speeds) / length(speeds)
+        print("The average speed is: ", average, " Km/h")
+    end
+
+    # > average(8, 4)
+    # The average speed is: 6.0 Km/h
+
+1.  Now let's use again the function bellow to calculate the time Sarah
+    will take at that speed to swim 1600 Km in the pool.
+
+<!-- -->
+
+    function time(dist, speed)
+        # distance input in meters
+        time = dist * 60 / speed
+        print("Sarah shall swim ", dist, " Km in ", time)
+        print(" minutes, in still waters.")
+    end
+
+    # > time(100, 6)
+    # Sarah shall swim 100 meters in 1.0 minutes, in still waters.*
+
+-   Which is quite good considering that the 100 meters freestyle world
+    record is 51.71 seconds, and belongs (presently) to (guess who)
+    Sarah Sjöström. :)
+
+P.S.: The speed of the current is 8 - 6 = 2 or 6 - 4 = 2 Km/h
+
+*Numbers - Decimal to Binary*
+=============================
+
+*"Suppose you wish to convert an ordinary number into the two-based
+system. You divide it by 2 and set the reminder to one side. (If the
+number is even, the remainder will be 0, if odd, it will be 1.) Working
+only with the whole number portion of the quotient, you divide that by 2
+again, and again set the remainder to one side and work only with the
+whole-number portion of the new quotient. When the whole portion is
+reduced to 0 as a result of the repeated divisions by 2, you stop. The
+remainders, read backwards, give the original number in the two-based
+system.*
+
+*...*
+
+*In the two-based system, then, 131 is writen 10000011."*
+
+*author: Isaac Asimov (Asimov on Numbers, 1959)*
+
+1.  Solution to translate any decimal number into a binary number:
+
+<!-- -->
+
+    function decim2binar(n)
+        bn = ""
+        while n > 0
+            bn = bn * string(n % 2)
+            n = n ÷ 2
+        end
+        print(reverse(bn))
+    end
+
+    > decim2binar(131)
+    10000011
+
+1.  A function to do the opposite translation...
+
+<!-- -->
+
+    function binar2decim(bn)
+        sbn = reverse(string(bn))
+        dn = []
+        for i in 1:length(sbn)
+            pd = parse(Int, sbn[i]) * 2^(i-1)
+            push!(dn, pd)
+        end
+        return sum(dn)
+    end
+
+    > binar2decim(10000011)
+    131
+
+... or simply use one of Julia' methods:
+
+    > Int(0b10000011)
+    131
+
+*Wheat on a Chessboard*
+=======================
+
+*The Wheat and a Chessboard is an ancient legend about the inventor of
+chess, who showed his invention to the Emperor of India for the first
+time. The Emperor was very impressed by the invention.*
+
+*He liked it so much, that he offered any reward the inventor could wish
+for. The inventor said: “My wish is very simple. There are 64 squares on
+the chessboard and:*
+
+*- for the first square I wish only 1 grain of wheat;*
+
+*- for the second one I wish 2 grains;*
+
+*- for the third one I wish 4 grains;*
+
+*- for the fourth I wish 8 grains;*
+
+*and so on for all the 64 squares.*
+
+*The Emperor was not good at math and was surprised that the inventor
+seemed to have asked for such a small reward. A few days later the
+Emperor asked his treasurer whether the chess inventor has been
+rewarded. The treasurer informed the emperor that the reward turned out
+to be an astronomical sum, greater than all the wheat that could be
+gathered in many centuries.*
+
+*author: Into Math*
+
+*This exercise can be used to demonstrate how quickly exponential
+sequences grow, as well as to introduce exponents, zero power,
+capital-sigma notation and geometric series.* [Wheat and chessboard
+problem](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem)
+
+For an explanation of the solution: [Wheat and chessboard problem,
+Solutions](https://en.wikipedia.org/wiki/Wheat_and_chessboard_problem#Solutions)
+
+-   Solution in Julia code:
+
+<!-- -->
+
+    # wocGeomProg = wheat on chessboard Geometric Progression
+
+    function wocGeomProg(n)
+
+        # grains_n_sq = grains on the n square
+        grains_n_sq = big(2)^big(n-1)
+        
+        # grains_sum_to_n = sum of all grains to n square
+        grains_sum_to_n = big(2)^big(n) - 1
+        
+        println("The number of grains on the square ", n, " is ", grains_n_sq)
+        
+        println("The sum of all grains to the square ", n, " is ", grains_sum_to_n)
+        
+    end
+
+    > wocGeomProg(1)
+    The number of grains on the square 1 is 1
+    The sum of all grains to the square 1 is 1
+
+    > wocGeomProg(2)
+    The number of grains on the square 2 is 2
+    The sum of all grains to the square 2 is 3
+
+    > wocGeomProg(3)
+    The number of grains on the square 3 is 4
+    The sum of all grains to the square 3 is 7
+
+    > wocGeomProg(4)
+    The number of grains on the square 4 is 8
+    The sum of all grains to the square 4 is 15
+
+    > wocGeomProg(64)
+    The number of grains on the square 64 is 9223372036854775808
+    The sum of all grains to the square 64 is 18446744073709551615
+
+Note: When dealing with big numbers in Julia (for example 2\^64), one
+must use big() or Int128() to obtain a correct result.
+
+*Office Workers*
+================
+
+*There are as many four-legged chairs and as many four-legged tables as
+workers in the office of Yamraj, and as many three-legged stools as
+four-legged office closets.*
+
+*If the number of stools is one more than number of workers and the
+total number of legs is 585, then what is the number of workers in the
+office?*
+
+Solution:
+
+    function officeworkers()
+        for w in 1:50
+            for tc in 1:100
+                for s in 1:50
+                    for c in 1:50
+                        if w*2 + tc*4 + c*4 + s*3 == 585 && s == w+1 && tc == w*2 && s == c
+                            println("Number of workers is: ", w)
+                            println("There are also:")
+                            println(tc, " tables and chairs,")
+                            println(s, " stools, and")
+                            println(c, " office closets.")
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    > officeworkers()
+    Number of workers is: 34
+    There are also:
+    68 tables and chairs,
+    35 stools, and
+    35 office closets.
+
+The answer for the puzzle: There are 34 workers in the office.
+
+*Fibonacci's Rabbits*
+=====================
+
+*In this same book \[Liber Abaci, 1202\] Fbonacci introduces the
+following problem: "How many rabbits can be produced from a single pair
+in a year if every ontheach pair begets a new pair, which from the
+second month on become productive, and no deaths occur? (...)"*
+
+*In the first month we begin with a pair of immature rabbits, and in the
+second month we still have one pair, but now they are mature. By the
+third month they have produced a new pair, so there are two pairs, one
+mature, one immature. By the fourth month the imature pair has become
+mature and the first pair has produced another immature pai, so there
+are three pairs, two mature and one immature.*
+
+*You can go on if you wish, reasoning out how many pairs of rabbits
+there will be each month, but I will give you the seriesof numbers right
+nowand save you the trouble. It is:*
+
+*1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144*
+
+    function fib(n)
+        a = big(0); b = big(1)
+        if n < 0
+            println("n must be a non negative integer")
+        elseif n == 0
+            return a
+        elseif n == 1
+            return b
+        else
+            for i in 1:n-1
+                c = a + b
+                a = b; b = c
+            end
+            return b
+        end
+    end
+
+    > fib(-1)
+    n must be a non negative integer
+    > fib(1)
+    1
+    > fib(2)
+    1
+    > fib(3)
+    2
+    fib(4)
+    3
+    fib(12)
+    144
+    # the big() notation on the initial variables allows big values of fib() as result
+    fib(128)
+    251728825683549488150424261
+
+*Cats and Rats*
+===============
+
+*A number of cats got together and decided to kill between them 999919
+rats. Every cat killed an equal number of rats. Each cat killed more
+rats than there were cats. How many rats do you think that each cat
+killed ?*
+
+Solution:
+
+Let's presume that the number of cats will be between 2 and 999, and the
+number of rats that each cat can kill will be between 1000 and 50000.
+
+    function catsandrats()
+        for c in 2:999
+            for r in 1000:50000
+                # if the number of cats times the number of rats
+                # each of them killed equals total number of rats,
+                # and the number of cats is less than the number
+                # of rats each cat killed
+                if c * r == 999919 && c < r
+                print("The number of cats is ", c, " and the number of rats is ", r)
+                end
+            end
+        end
+    end
+
+    > catsandrats()
+    The number of cats is 991 and the number of rats is 1009
+
+*Letters that didn't change place*
+==================================
+
+*Which letters of the word FEEBLE will remain in the same place if they
+are sorted in alphabetical order?*
+
+1.  Strict solution:
+
+<!-- -->
+
+    function lettersremain()
+        wrd = "FEEBLE"
+        arr = collect(wrd)
+        sarr = sort(arr)
+        println("Original word: ", String(arr))
+        println("Sorted word:   ", String(sarr))
+        print("Letters in the same place: ")
+        for i in 1:length(arr)
+            if arr[i] == sarr[i]
+                print(arr[i])
+            end
+        end
+    end
+
+    > lettersremain()
+    Original word: FEEBLE
+    Sorted word:   BEEEFL
+    Letters in the same place: EE
+
+1.  However, with only one word is very uninteresting, right? Let's
+    generalize the function so we can do it with other, longer and more
+    interesting, words as, for example, abracadabra or
+    supercalifragilisticexpialidocious\*.
+
+<!-- -->
+
+    function lettersremain2(wrd)
+        arr = collect(wrd)
+        sarr = sort(arr)
+        println("Original word: ", String(arr))
+        println("Sorted word:   ", String(sarr))
+        print("Letters in the same place: ")
+        for i in 1:length(arr)
+            if arr[i] == sarr[i]
+                print(arr[i])
+            end
+        end
+    end
+
+    > word = "abracadabra"
+    > lettersremain2(word)
+    Original word: abracadabra
+    Sorted word:   aaaaabbcdrr
+    Letters in the same place: aar
+    > word = "supercalifragilisticexpialidocious"
+    > lettersremain2(word)
+    Original word: supercalifragilisticexpialidocious
+    Sorted word:   aaacccdeefgiiiiiiillloopprrssstuux
+    Letters in the same place: cfiiu
+
+-   "Supercalifragilisticexpialidocious" is a song from the Disney
+    musical film Mary Poppins.
+
+*Find the Big Number*
+=====================
+
+\_ What 5 - digit number has the following features :\_
+
+*If we put the numeral 1 at the beginning, we get a number three times
+smaller than if we put the numeral 1 at the end of the number?*
+
+Let's do some thinking and see this graphically:
+
+-   1abcde \* 3 = abcde1
+-   Notice that the 1 in 1abcde is in the 6th position to the left. So,
+    1abcde = 100000 + abcde
+-   In the same way, the 1 in abcde1 is in the 1st position on the
+    right. So, abcde1 = abcde + 1
+-   Now let's replace the series of unknown digits abcde by A
+-   And we can write it as (100000 + A) \* 3 = 10 \* A + 1
+
+All we need to know is the what 5 digits number A represents.
+
+Solution:
+
+    function findnumber()
+        for A in 1:99999
+            if 3 * (100000+A) == A * 10 + 1
+                print(A)
+            end
+        end
+    end
+
+    > findnumber()
+    42857
+
+    # Check if it is true
+    > 3 * 142857
+    428571
+
+*Num equals cube of sum of digits*
+==================================
+
+*Replace each letter for a unique digit so that the following equation
+is correct:*
+
+        (J + O + I + N + T)^3 = JOINT
+
+Solution:
+
+    function numissum3()
+        # go through all 5 digits numbers
+        for num in 10000:99999
+            # splits the number into digits
+            d = digits(num)
+            # sum the digits
+            sd = sum(d)
+            if num == sd^3
+                println("The sum of ", "(", d, ")^3", " is ", num)
+            end
+        end
+    end
+
+    > numissum3()
+    17576 is equal the sum of ([6, 7, 5, 7, 1])^3
+    19683 is equal the sum of ([3, 8, 6, 9, 1])^3
+
+    #Check if it is true
+    > 6 + 7 + 5 + 7 + 1
+    26
+    > 26^3
+    17576
+
+*Blueberries on Cups*
+=====================
+
+*Maria has some blueberries and some cups. If she puts 9 blueberries
+into each cup she will have two cups left. If she puts 6 blueberries
+into each cup she will have three blueberries left over.*
+
+*How many blueberries and cups has Maria?*
+
+So:
+
+1.  The number of groups of nine berries is equal to the number of cups
+    minus two.
+2.  The number of berries minus three, divided in groups of six is equal
+    to the number of cups.
+
+<!-- -->
+
+    function berriesincups()
+        for c in 1:20
+            for b in 10:100
+                if b/9 == c-2 && (b-3)/6 == c
+                    print("Maria has ", c, " cups and ", b, " blueberries.")
+                end
+            end
+        end
+    end
+
+    > berriesincups()
+    Maria has 7 cups and 45 blueberries.
+
+    # Check if it is true
+    > 45 / 9
+    5   # groups of 9 in 5 cups
+    > 5 + 2
+    7   # cups in total
+
+*What's the PIN ?*
+==================
+
+*She forgot her bank account's PIN, which is a 5 digit number, but
+luckily she remembered some hints on how to recall it.*
+
+*Here are the clues:*
+
+*1. First digit is the square of the second.*
+
+*2. The sum of second and third digits is ten.*
+
+*3. Fourth digit is equal to the second plus one.*
+
+*4. The sum of all the digits is thirty.*
+
+*What is the PIN?.*
+
+Solution:
+
+    function findPIN()
+        for num in 10000:99999
+            dgs = reverse(digits(num))
+            if dgs[1] == dgs[2]^2 && dgs[2]+dgs[3] == 10 && dgs[4] == dgs[2]+1 && sum(dgs) == 30
+                print("The PIN is ",num)
+            end
+        end
+    end
+
+    > findPIN()
+    The PIN is 93747
+
+*Sequence & Check for Squares & Primes* 
+=======================================
+
+*First: A 2-digit number is such that the sum of its digits is 3 times
+the difference between digits.*
+
+*Second: Which of these 2-digit numbers are neither a perfect square nor
+a prime?*
+
+1.  Find all the numbers that fulfil the First condition:
+
+<!-- -->
+
+    function all2digit()
+        l = []
+        for num in 10:99
+            digs = digits(num)
+            if sum(digs) == (digs[1]-digs[2])*3 || sum(digs) == (digs[2]-digs[1])*3
+                push!(l, num)
+            end
+        end
+        return l
+    end
+
+    #create a list L that catches the output of function all2digit()
+    > L = all2digit()
+    # print L to check the numbers in it
+    > print(L)
+    Any[12, 21, 24, 36, 42, 48, 63, 84]
+
+1.  Check if any of those numbers in L is a perfect square:
+
+<!-- -->
+
+    function isitsquare(l)
+        for n in 2:10
+            if n*n in l
+                println(n*n, " is the square of ", n)
+            end
+        end
+    end
+
+    > isitsquare(L)
+    36 is the square of 6
+
+1.  Last, check if any of those numbers in L is prime:
+
+<!-- -->
+
+    function isitprime(n)
+        if -1 < n < 2
+            return false
+        end
+        if n == 2
+            return true
+        end
+        uplim = trunc(Int, n^(0.50)) + 1
+        for i in 2:uplim
+            if n % i == 0
+                return false
+            end
+        end
+        return true
+    end
+
+    # this function can be used to check primes number by number
+    # and it can be used as auxiliary to check primes in arrays
+    # using the following function
+
+    function primesinarray(arr)
+        for e in arr
+            if isitprime(e) == true
+                println(e, " is prime")
+            end
+        end
+        println("NO prime numbers in this array")
+    end
+
+    # remember L
+    > print(L)
+    Any[12, 21, 24, 36, 42, 48, 63, 84]
+
+    # now check L for primes
+    > primesinarray(L)
+    NO (more) prime numbers in this array
+
+    # check the output of this function for a test array with prime numbers
+    > test = [4, 6, 8, 10, 13, 17]
+    > primesinarray(test)
+    13 is prime
+    17 is prime
+    NO (more) prime numbers in this array
+
+*Short Logic Challenge*
+=======================
+
+*Twenty times a positive integer is less than its square by 156.*
+
+*What is the integer?*
+
+Solution:
+
+    function getint()
+        for int in 1:100
+            if (int * 20) + 156 == int^2
+                print(int)
+            end
+        end
+    end
+
+    > getint()
+    26
+
+*Covent Garden Problem*
+=======================
+
+*Here is a puzzle known as the Covent Garden Problem, which appeared in
+London half a century ago, accompanied by the somewhat surprising
+assertion that it had mystified the best mathematicians of England:*
+
+*Mrs. Smith and Mrs. Jones had equal number of apples but Mrs. Jones had
+larger fruits and was selling hers at the rate of two for a penny, while
+Mrs. Smith sold three of hers for a penny.*
+
+*Mrs. Smith was for some reason called away and asked Mrs. Jones to
+dispose of her stock. Upon accepting the responsibility of disposing her
+friend's stock, Mrs. Jones mixed them together and sold them of at the
+rate of five apples for two pence.*
+
+*When Mrs. Smith returned the next day the apples had all been disposed
+of, but when they came to divide the proceeds they found that they were
+just seven pence short, and it is this shortage in the apple or
+financial market which has disturbed the mathematical equilibrium for
+such a long period.*
+
+*Supposing that they divided the money equally, each taking one-half,
+the problem is to tell just how much money Mrs. Jones lost by the
+unfortunate partnership?*
+
+*author: Sam Loyd*
+
+Solution:
+
+1.  Look for a number *n* such as its half, *n/2* is divisible by 2, 3
+    and 5. *n* is the total least number of apples the two ladies were
+    selling.
+
+<!-- -->
+
+    function leastTotalApples()
+        for n in 1:100
+            if (n/2) % 2 == 0 && (n/2) % 3 == 0 && (n/2) % 5 == 0
+                return n
+            end
+        end
+    end
+
+    > leastTotalApples()
+    60
+
+1.  Calculate the difference between the sum of the money that the
+    ladies would have earned by selling individually, and the money
+    earned by the common selling.
+
+<!-- -->
+
+    # Mrs Jones sale
+    30 / 2 * 1 = 15 pence
+    # Mrs Smith sale
+    30 / 3 * 1 = 10 pence
+    # Mrs Jones plus Ms Smith
+    10 + 15 = 25 pence
+    # Common sale
+    60 / 5 * 2 = 24 pence
+    # Difference
+    25 - 24 = 1 penny
+    # Mrs Smith gain by collecting half the money
+    24 / 2 - 10 = +2 pence
+    # Mrs Jones loss by collecting half the money
+    24 / 2 - 15 = -3 pence
+
+1.  "but when they came to divide the proceeds they found that they were
+    just seven pence short" The loss for 60 apples, *n*, was only 1
+    penny, so everything must be multiplied by 7.
+
+<!-- -->
+
+    # Totals:
+    # number of apples
+    60 * 7 = 420 apples
+    # each lady's apples
+    30 * 7 = 210 apples
+    # hidden profit for Mrs Smith from the common sale
+    7 * 2 = 14 pence
+    # hidden loss for Mrs Jones from the common sale
+    7 * -3 = -21 pence
+
+The answer for the puzzle: Mrs Jones lost 21 pence.
+
+*Great Picnic*
+==============
+
+*When they started off on the great annual picnic every wagon in town
+was pressed into service, each one carrying the same number of people.*
+
+*Half way to the picnic ground ten wagons broke down, so it was
+necessary for each of the remaining wagons to carry one more person.*
+
+*When they started for home it was discovered that fifteen more wagons
+were out of commission, so on the return trip there were three persons
+more in each wagon than when they started out in the morning.*
+
+*Now who can tell how many people attended the great annual picnic?*
+
+*author: Sam Loyd*
+
+Solution:
+
+1.  Let's assign *w* for the number of wagons and *p* for people in each
+    wagon. To go straight for the answer we will just need to know *w*
+    times *p*.
+
+2.  Using these variables and the conditions described in the text it is
+    possible to establish two equations leading to the same result
+    (w\*p).
+
+<!-- -->
+
+    function peopleandwagons()
+        for w in 10:200
+            for p in 5:50
+                if w*p == (w-10)*(p+1) && w*p == (w-25)*(p+3)
+                    println(w*p, " people attended the great annual picnic.")
+                    println(w, " wagons started the service, each one carrying ", p, " persons.")
+                end
+            end
+        end
+    end
+
+    > peopleandwagons()
+    900 people attended the great annual picnic.
+    100 wagons started the service, each one carrying 9 persons.
+
+*Five Girl's Individual Weights*
+================================
+
+*The five school children in couples weigh 129 pounds, 125 pounds, 124
+pounds, 123 pounds, 122 pounds, 121 pounds, 120 pound, 118 pounds, 116
+pounds and 114 pounds on a weighing machine.*
+
+*author: Sam Loyd*
+
+I don't know if this was Sam Loyd's original text for the puzzle, but it
+seems a little incomplete. The descending order of the pair's weights
+permits to deduce that the girls wanted to take advantage of one single
+coin on the weighing machine, which will display lower weights but not
+higher. So, we may also presume that the girls ordered from the heaviest
+to the lightest. Let's follow that descending order and give the girls
+alphabetical names: Anna, Beatrice, Caroline, Daphne and Elizabeth.
+
+Solution.
+
+1.  First we get the weights of the 3 heaviest girls as follow:
+
+<!-- -->
+
+    function girlsweights1()
+        for A in 1:100
+            for B in 1:100
+                for C in 1:100
+                    if A+B == 129 && A+C == 125 && B+C == 124
+                        println("Anna's weight is ", A)
+                        println("Beatrice's weight is ", B)
+                        println("Caroline's weight is ", C)
+                    end
+                end
+            end
+        end
+    end
+
+    > girlsweights1()
+    Anna's weight is 65
+    Beatrice's weight is 64
+    Caroline's weight is 60
+
+1.  Now let's do identically for the 3 lightest girls:
+
+<!-- -->
+
+    function girlsweights2()
+        for C in 1:100
+            for D in 1:100
+                for E in 1:100
+                    if C+D == 118 && C+E == 116 && D+E == 114
+                        println("Caroline's weight is ", C)
+                        println("Daphne's weight is ", D)
+                        println("Elizabeth's weight is ", E)
+                    end
+                end
+            end
+        end
+    end
+
+    > girlsweights2()
+    Caroline's weight is 60
+    Daphne's weight is 58
+    Elizabeth's weight is 56
+
+We must have done it right because Caroline's weight was calculated the
+same, 60.
+
+Answer for the puzzle: The girls individual weights are 65, 64, 60, 58
+and 56 pounds.
+
+*Battle of Hastings Squares*
+============================
+
+*Sam Loyd's Battle of Hastings Puzzle In the Battle of Hastings that
+occurred on October 14, 1066 Harold's forces formed 13 similar squares
+with exactly same number of soldiers in each square.*
+
+*When Harold himself joined the fray and was added to the number of his
+soldiers in those thirteen squares a single huge square could be
+arranged. How many men there must have been in Harold's force?*
+
+*author: Sam Loyd*
+
+Solution:
+
+All we have to do is find some number *x* which squared, multiplied by
+thirteen and added of one is a perfect square.
+
+    function battlesquares()
+        for x in 1:1000
+            if string(sqrt((x^2 * 13) + 1))[end]  == '0' && string(sqrt((x^2 * 13) + 1))[end-1] == '.'
+                bigsq = x^2 * 13 + 1
+                bigsqside = trunc(Int,(sqrt(x^2 * 13 + 1)))
+                smsqs = x^2
+                smsqside = x
+                println("Total men in 'a single huge square': ", bigsq)
+                println("With ", bigsqside, " on each side.")
+                println("Number of men on each of the 13 small squares; ", smsqs)
+                println("With ", smsqside, " on each side.")
+            end
+        end
+    end
+
+    > battlesquares()
+    Total men in 'a single huge square': 421201
+    with 649 men on each side.
+    Number of men on each of the 13 small squares: 32400
+    with 180 men on each side.
+
+The answer for the puzzle: The total men in Harold's force must have
+been 421201.
+
+*Order the Keys*
+================
+
+*Bluebeard explains that his bunch of keys was strung upon an endless
+key ring and divided into three groups so that the first group
+multiplied by the second equaled the third!*
+
+*That was the secret by which he knew whether the keys had been tampered
+with and forbidden chambers had been entered.*
+
+*You see that 6910 multiplied by 7 does not amount to 83452, so the keys
+were not replaced properly in their groups.*
+
+*Can our clever puzzlists show how the keys must have been arranged in
+three groups so that the first group multiplied by the second makes the
+third?*
+
+*author: Sam Loyd*
+
+-   Basically, all we have to do is find a way to have 3 different
+    groups of numbers, all of different digits; the first 2 numbers
+    being the factors of a multiplication which result is equal to the
+    3rd number.
+
+-   The total number of digits is 10 (0,1,2,3,4,5,6,7,8,9), half for the
+    2 factors and half for the result.
+
+-   Sets in Julia do not allow repeated elements, digits for the case
+    here, so if you have a Set of length 10 with both the digits of the
+    factors and the digits of the result, it means that the numbers have
+    all different digits.
+
+Solution 1:
+
+    function orderkeys()
+        println("The keys may be ordered in the following groups:")
+        for a in 10:99
+            for b in 100:999
+                da = digits(a); db = digits(b)
+                dadb = union(da, db)
+                daxb = digits(a*b)
+                dadbdaxb = union(dadb, daxb)
+                Sdadbdaxb = Set(dadbdaxb)
+                if length(Sdadbdaxb) == 10
+                    println(a, " x ", b, " = ", a*b)
+                end
+            end
+        end
+    end
+
+    > orderkeys()
+    The keys may be ordered in the following groups:
+    27 x 594 = 16038
+    36 x 495 = 17820
+    39 x 402 = 15678
+    45 x 396 = 17820
+    46 x 715 = 32890
+    52 x 367 = 19084
+    54 x 297 = 16038
+    63 x 927 = 58401
+    78 x 345 = 26910
+
+Solution 2:
+
+    function orderkeys2()
+        println("The keys may be ordered in the following groups:")
+        for a in 1:9
+            for b in 1000:9999
+                db = digits(b)
+                dadb = union(a, db)
+                daxb = digits(a*b)
+                dadbdaxb = union(dadb, daxb)
+                Sdadbdaxb = Set(dadbdaxb)
+                if length(Sdadbdaxb) == 10
+                    println(a, " x ", b, " = ", a*b)
+                end
+            end
+        end
+    end
+
+    > orderkeys2()
+    The keys may be ordered in the following groups:
+    3 x 5694 = 17082
+    3 x 6819 = 20457
+    3 x 6918 = 20754
+    3 x 8169 = 24507
+    3 x 9168 = 27504
+    4 x 3907 = 15628
+    4 x 7039 = 28156
+    4 x 9127 = 36508
+    6 x 5817 = 34902
+    7 x 3094 = 21658
+    7 x 4093 = 28651
+    7 x 9304 = 65128
+    7 x 9403 = 65821
+
+The answer for the puzzle: There are at least 22 possible solutions as
+shown in the code boxes above.
+
+*Weighing With Marbles*
+=======================
+
+*• If a top and three cubes equal in weight to 12 marbles (the scales
+balance),*
+
+*• and a top is equal in weight to a cube and eight marbles (the scales
+balance),*
+
+*• how many marbles would be needed to balance with a top?*
+
+Solution:
+
+     function marblesweigh()
+        for c in 1:10
+            for t in 1:10
+                if 3c + t == 12 && t == 8 + c
+                    print("To balance a top ", t, " marbles will be needed.") 
+                end
+            end
+        end
+    end
+
+    > marblesweigh()
+    To balance a top 9 marbles will be needed.
+
+Note: A cube and a marble weigh the same.
+
+*The Cashier's Problem*
+=======================
+
+*An old man goes to a bank with a check of $200 and asks the cashier
+"Give me some one-dollar bills, ten times as many twos and the balance
+in fives!".*
+
+*What will the cashier do?*
+
+*author: Sam Loyd*
+
+Solution:
+
+Because the balance is in 'fives', the subtotal of 'ones' and 'twos'
+must be a multiple of 5, and there is only one number that fulfils that
+condition in the given interval 1 to 200.
+
+    function condcashdraw()
+        for x in 1:20
+            for y in 1:50
+                if x*(1+20) % 5 == 0 && x*(1+20) + y*(5) == 200
+                    println("\$1 bills:  ", x)
+                    println("\$2 bills: ", x*10)
+                    println("\$5 bills: ", y)
+                end
+            end
+        end
+    end
+
+    > condcashdraw()
+    $1 bills:  5
+    $2 bills: 50
+    $5 bills: 19
+
+The answer for the puzzle: The cashier shall give the man five $1 bills,
+fifty $2 bills and nineteen $5 bills; 5 + (50 x 2) + (19 x 5) = 5 + 100
++ 95 = 200 dollars.
+
+*The Herd division*
+===================
+
+*An Arab Sheik, finding himself about to die, called his sons about him
+and said: "Divide my camels among you in the proportion of one-half of
+the herd to the eldest son, the second son one-third, and to the
+youngest son one-ninth." Thereupon the oldest son cried: "O, my father,
+one-half, one-third, and one-ninth do not constitute a whole. To whom,
+therefore, shall the remainder of the herd be given?"*
+
+*"To any poor man who may be standing by when the division is made,"
+replied the Sheik, who thereupon died.*
+
+*When the herd was collected a new difficulty arose. The number of the
+camels could not be divided either by two or three or nine. While the
+brothers were disputing, a poor but crafty Bedouin, standing by with his
+camel, exclaimed, "Behold, I will sell you my beast for ten pieces of
+silver, so that you may then divide the herd."*
+
+*Seeing that the addition of one camel would solve the difficulty, the
+brothers jumped at the offer, and proceeded to divide the herd, but when
+each had received his allotted portion there yet remained one camel.*
+
+*"I am the poor man standing by." Said the crafty Bedouin, and gaily
+mounting the camel, he rode away, with the ten pieces of silver in his
+turban.*
+
+*Now, how many camels were in the Sheik's herd?*
+
+*author: Sam Loyd*
+
+A big story with a short solution.
+
+In order to be divided in the proportions given by the Sheik the number
+of camels ought to be divisible by 2, 3 and 9, and the remainder should
+be 1.
+
+    function herdDivision()
+        for a in 1:100
+            for b in 1:100
+                if b % a == 1 && a//b == 1//2 + 1//3 + 1//9
+                    println("The Sheik's herd had ", a, " camels.")
+                    println("Adding the Bedouin's camel the herd came to have ", b, " camels.")
+                end
+            end
+        end
+    end
+
+    > herdDivision()
+    The Sheik's herd had 17 camels.
+    Adding the Bedouin's camel the herd came to have 18 camels.
+
+Now the divison could be made the following way:
+
+-   For the elder brother, 18÷2=9 camels.
+-   For the middle brother, 18÷3=6 camels.
+-   For the younger brother, 18÷9=2 camels.
+
+Notice however that 9+6+2=17 camels, that is, the original herd number.
+So, now there is a remainder of 1 camel - for "the poor man standing
+by".
+
+*The Mathematical Milkman*
+==========================
+
+*The school children were returning to their homes when they met the
+mathematical milkman, who propounds the following problem:*
+
+*In one of the two cans there is milk which is so rich with cream that
+it becomes absolutely necessary to dilute it with a little water to make
+it wholesome.*
+
+*Therefore, in the other can there is some pure spring water, now I
+proceed to pour spring water from can No. 1 into can No. 2 sufficient to
+double its contents, and then re-pour from No. 2 into No. 1 enough of
+the mixture to double the contents.*
+
+*Then to equalize matters, I again pour from No. 1 into No. 2 to double
+the contents of No. 2 and find the same number of gallons of milk in
+each can, although there is one more gallon of water in can No. 2 than
+there is milk, so I want you to tell me how much more water than milk is
+there in can No. 1?*
+
+*author: Sam Loyd*
+
+To get to the solution we need to do first do some math thinking.(a)
+
+1.  Suppose that in the beginning there was x gallons of spring water in
+    Can 1 and y gallons of milk in Can 2:
+
+-   After doubling contents of Can 2:
+
+Can 1 -\> water=x-y, milk=0, total=x-y Can 2 -\> water=y, milk=y,
+total=2y
+
+-   Next, after doubling the contents of Can 1:
+
+Can 1 -\> water=2(3/4(x-y)), milk=2(1/4(x-y)), total=2(x-y) Can 2 -\>
+water=1/2(3y-x), milk=1/2(3y-x), total=2y-(x-y) i.e. 3y-x
+
+-   Finally, after doubling the contents of Can 2 again:
+
+**Can 1 -\> total=2(x-y)-(3y-x) i.e. 3x-5y, water=3/4(3x-5y),
+milk=1/4(3x-5y)** **Can 2 -\> total=2(3y-x), water=5/4(3y-x),
+milk=3/4(3y-x)**
+
+1.  Now, we are told that there are *the same number of gallons of milk
+    in each can*. So, copying from above:
+
+-   1/4(3x-5y) = 3/4(3y-x)
+
+1.  We are also told that *there is one more gallon of water in can No.
+    2 than there is milk*, that is (also copying from 1.):
+
+-   5/4(3y-x) = 3/4(3y-x)+1
+
+1.  We can now calculate the values of *x* (gallons of water in the
+    beginning, in can No. 1) and *y* (gallons of milk in the beginning,
+    in can No. 2):
+
+<!-- -->
+
+    function waterandmilk()
+        for x in 1:20
+            for y in 1:20
+                if 1/4*(3x-5y) == 3/4*(3y-x) && 5/4*(3y-x) == 3/4*(3y-x)+1
+                    println("In the beginning there were:")
+                    println(x, " gallons of water in can No. 1")
+                    println(y, " gallons of milk in can No. 2")
+                end
+            end
+        end
+    end
+
+    > waterandmilk()
+    In the beginning there were:
+    7 gallons of water in can No. 1
+    3 gallons of milk in can No. 2
+
+1.  Last, to answer the final question - *how much more water than milk
+    is there in can No. 1* - we must go back to the equations for the
+    gallons of water and milk in Can 1 after all the mixings and
+    calculate their difference:
+
+<!-- -->
+
+    # Can 1: water=3/4(3x-5y)
+    > (3/4)*(3*7-5*3)
+    4.5
+    # Can 1: milk=1/4(3x-5y)
+    > (1/4)*(3*7-5*3)
+    1.5
+    # difference
+    > 4.5-1.5
+    3.0
+
+The answer for the puzzle: There is 3 more gallons of water than milk in
+can No. 1
+
+\(a) Disclaimer: I am not the author of the mathematics for the puzzle
+solution. I can only presume that the author must have been one of the
+following persons: Les Bill Gates, Dianne Gentry, David Sevilla or Jesus
+Ernesto Montes.
+
+*The Price of Eggs*
+===================
+
+*This odd little problem in domestic arithmetic was sprung by the cook
+upon Mrs. Smith when she wanted to know what the grocer charged for such
+small eggs.*
+
+*"I paid twelve cents for the lot," replied Bridget, "but I made him
+throw in two extra ones, because they were so little, and you see that
+made them cost one cent a dozen less than his first asking price*
+
+*Tell now how many eggs she received for her twelve cents?*
+
+*author: Sam Loyd*
+
+Solution:
+
+-   Let *x* be the number of eggs offered by the grocer for 12 cents;
+-   The price of a dozen would be, then 12 cents divided by the number
+    of dozens, that is, 12/(x/12);
+-   If we add to *x* the 2 extra eggs that the cook demanded, the price
+    for a dozen would be 1 cent less, that is, 12/((x+2)/12), and if we
+    add that cent less the price for a dozen will be equal in both
+    cases.
+
+<!-- -->
+
+    function eggsprice()
+        for x in 1:20
+            if 12/(x/12) == 12/((x+2)/12)+1
+                println("The grocer offered ", x, " eggs for 12 cents.")
+                println("The cook recieved ", x+2, " eggs for the same price.")
+                println("The price of a dozen in the first case is ", 12/(x/12), " cents.")
+                println("The price of a dozen in the second case is ", 12/((x+2)/12), " cents.")
+            end
+        end
+    end
+
+    > eggsprice()
+    The grocer offered 16 eggs for 12 cents.
+    The cook recieved 18 eggs for the same price.
+    The price of a dozen in the first case is 9.0 cents.
+    The price of a dozen in the second case is 8.0 cents.
+
+The answer for the puzzle: The cook received 18 eggs for 12 cents.
+
+*Weighing the Baby*
+===================
+
+*How much does the baby weigh if the mother weighs 100 pounds more than
+the combined weight of the baby and the dog, and the dog weighs 60
+percent less than the baby?*
+
+*author: Sam Loyd*
+
+1.  A little mathematical thinking first:
+
+-   Be *w* the mother's weight, *b* the baby's weight, and *d* the dog's
+    weight.
+-   So, all summed weights are equal to 170 pounds, w+b+c=170, and
+    mother's weight is the sum of the baby's and the dog's weights plus
+    100 pounds, w=b+d+100.
+-   Replacing w in the 1st equation with its value in the 2nd equation
+    we get (b+d+100)+b+d=170. Simplifying, 2b+2d=170-100 i.e. 2b+2d=70
+-   We are also told that the dog's weight is 60% less than the baby's
+    weight, i.e. b/d=3/2.
+
+1.  Now for the code:
+
+<!-- -->
+
+    function babyweight()
+        for b in 1:50
+            for d in 1:30
+                if 2b+2d == 70 && b/d == 3/2
+                    println("The baby weighs ", b, " pounds.")
+                    println("The dog weighs ", d, " pounds.")
+                    println("The mother weighs ", 100+b+d, " pounds.")
+                end
+            end
+        end
+    end
+
+    > babyweight()
+    The baby weighs 21 pounds.
+    The dog weighs 14 pounds.
+    The mother weighs 135 pounds.
+
+The answer for the puzzle: The baby weighs 21 pounds.
+
+*Pencils and Jars*
+==================
+
+*I have some pencils and some jars.*
+
+*If I put 9 pencils into each jar I will have two jars left over.*
+
+*If I put 6 pencils into each jar I will have three pencils left over.*
+
+*How many pencils and how many jars?*
+
+Solution:
+
+    function pencilsonjars()
+        for p in 1:100
+            for j in 1:50
+                if p/9 == j-2 && (p-3)/6 == j
+                    print(p, " pencils and ", j, " jars.")
+                end
+            end
+        end
+    end
+
+    > pencilsonjars()
+    45 pencils and 7 jars.
+
+There are 45 pencils and 7 jars.
+
+*Census Puzzle*
+===============
+
+*A census taker approaches a house and asks the woman who answers the
+door "How many children do you have, and what are their ages?"*
+
+*The woman replies "I have three children, the product of their ages are
+36, the sum of their ages are equal to the address of the house next
+door."*
+
+*The census taker walks next door, comes back and says "I need more
+information."*
+
+*The woman replies "I have to go, my oldest child is sleeping
+upstairs."*
+
+*Census taker then says "Thank you, I now have everything I need."*
+
+*What are the ages of each of the three children?*
+
+*Puzzle supplied by Richard Rider*
+
+Some mathematical thinking:
+
+-   First thing to do is get the factors of 36,
+    [factorization](https://en.wikipedia.org/wiki/Factorization), which
+    are also all the possible divisors (with remainder zero).
+
+<!-- -->
+
+    function factoring(n)
+        allfactors = [1]
+        for e in 2:(n/2)+1
+            if n % e == 0
+                push!(allfactors, Int(e))
+            end
+        end
+        return allfactors
+    end
+
+    # To replicate the solution for this puzzle it's indispensable
+    # to write this function (on the IDE on this example), but not
+    # to run it.
+    # Anyway, you can run it to get the factors of any number, and
+    # also to test if a number (greater than 2) is prime (true if
+    # the output is 1).
+    # For example:
+    > print(factoring(36))
+    [1, 2, 3, 4, 6, 9, 12, 18]
+    > factoring(283)   # 283 is prime
+    1-element Vector{Int64}:
+     1
+
+-   Next, these factors must fulfil some conditions:
+
+The product of the 3 factors must be 36 and, at the same time, their sum
+must be *equal to the address of the house next door.*
+
+These 2 conditions will be only true for the following values of *door*:
+10, 11, 13, 16, 18, 21
+
+    function agescalc(n, door)
+        factors = []
+        allfac = factoring(n)
+        for x in allfac
+            for y in allfac
+                for z in allfac
+                    if x*y*z == 36 && x+y+z == door
+                        push!(factors, x)
+                        push!(factors, y)
+                        push!(factors, z)
+                    end
+                end
+            end
+        end
+        return factors
+    end
+
+    # To replicate the solution for this puzzle it's indispensable
+    # to write this function (on the IDE on this example), but to
+    # run it function factoring(n) must have been previously
+    # written. For example:
+    > print(agescalc(36,13))
+    Any[1, 6, 6, 2, 2, 9, 2, 9, 2, 6, 1, 6, 6, 6, 1, 9, 2, 2]
+    > print(agescalc(36,11))
+    Any[2, 3, 6, 2, 6, 3, 3, 2, 6, 3, 6, 2, 6, 2, 3, 6, 3, 2]
+
+**Note**: With this code we are getting permutations (sequences of 3
+elements repeated for every possible order). This is sub-optimal, but we
+have decided to use only the *standard libraries* of a basic Julia
+installation. In order to get
+[combinations](https://www.totalassignmenthelp.com/blog/permutation-vs-combination/)
+we should have used an extension library for Julia called
+[Combinatorics](https://github.com/JuliaMath/Combinatorics.jl).
+
+-   Finally, to get the 3 children's ages the statements *"I need more
+    information."* and *my oldest child is sleeping upstairs."* must be
+    considered.
+
+The only possible sum of factors (door number) that has a double result
+is 13. And only one result is right because the woman has an oldest
+child.
+
+    function showages(n, door)
+        ages = agescalc(n, door)
+        if length(ages) < 2
+            return "That door number is not a possible sum of any 3 factors which product is 36. Please choose another."
+        end
+        if sort(ages[1:3]) == sort(ages[4:6])
+            println(ages[1],"x",ages[2],"x",ages[3],"=",n)
+        else
+            println(ages[1],"x",ages[2],"x",ages[3],"=",n)
+            println(ages[4],"x",ages[5],"x",ages[6],"=",n)
+        end
+        if door == 13
+            println("The only possible ages of the 3 children are ")
+            println(ages[4], ", ", ages[5], " and ", ages[6], ".")
+        end
+    end
+
+    # To replicate the solution for this puzzle it's indispensable
+    # to write and run this function (on the IDE on this example),
+    # but to run it functions factoring(n) and agescalc(n, door)
+    # must have been previously written.
+    > showages(36, 13)
+    1x6x6=36
+    2x2x9=36
+    The only possible ages of the 3 children are 
+    2, 2 and 9.
+    > showages(36, 11)
+    2x3x6=36
+    > showages(36, 12)
+    "That door number is not a possible sum of any 3 factors which product is 36. Please choose another."
+
+The answer for the puzzle: The only possible ages of the 3 children are
+2, 2 and 9.
+
+*Replace third and fifth zeros*
+===============================
+
+*What digits should be put instead of zeros in the third, and the fifth
+places in number 3000003 in order to give a number divisible by 13?*
+
+*author: Straszewicz*
+
+Solution:
+
+    function replacezeros()
+        println("Divisible by thirteen -> Digits that replace zeros")
+        for n in 3000003:3090903
+            sn = string(n)
+            if n % 13 == 0 && sn[2] == '0' && sn[4] == '0' && sn[6] == '0' && sn[3] != '0' && sn[5] != '0' && sn[end] == '3'
+                println(n, " -> ", sn[3], " & ", sn[5])
+            end
+        end
+    end
+
+    > replacezeros()
+    Divisible by thirteen -> Digits that replace zeros
+    3020303 -> 2 & 3
+    3030703 -> 3 & 7
+    3050203 -> 5 & 2
+    3060603 -> 6 & 6
+    3080103 -> 8 & 1
+    3090503 -> 9 & 5
+
+*Right Angle Triangle*
+======================
+
+*The lengths of the sides of a right-angled triangle are natural
+numbers.*
+
+*The length of one of the perpendicular sides is 10.*
+
+*Find the length of the remaining sides of this triangle.*
+
+*author: Straszewicz*
+
+Solution:
+
+-   Let's call *a* and *b* to the perpendicular sides of the triangle,
+    and *h* to its hypotenuse.
+
+-   The [Pythagorean
+    theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem) states
+    that the sum of the squares of the perpendicular sides is equal to
+    the square of the hypotenuse, i.e. a\^2+b\^2=h\^2.
+
+-   Knowing that a=10 the equation can be written as h\^2-b\^2=100.
+
+<!-- -->
+
+    function trianglesides()
+        for b in 1:50
+            for h in 1:100
+                if h^2-b^2 == 100
+                    print("b = ", b, "; ", "h = ", h)
+                end
+            end
+        end
+    end
+
+    > trianglesides()
+    b = 24; h = 26
+
+The sides of this triangle are: short leg = 10, long leg = 24,
+hypotenuse = 26
+
+*Number and Reverse*
+====================
+
+*When the units and tens digits of a certain two-digit number are
+reversed, the sum of the two numbers is 121 and the difference is 9.*
+
+*What is the tens digit of the original number?*
+
+Solution:
+
+    function numandreverse()
+        print("Two numbers fulfil the conditions: ")
+        for n in 11:99
+            rsn = reverse(string(n))
+            if parse(Int, rsn) + n == 121 && abs(parse(Int, rsn) - n) == 9
+                print(n, "  ")
+            end
+        end
+    end
+
+    > numandreverse()
+    Two numbers fulfil the conditions: 56  65
+
+The answer for the puzzle: The tens digit(s) of the original numbers(s)
+are 6 and 5.
+
+*Students Weight's Averages*
+============================
+
+*When a student weighing 54 kg left a class, the average weight of the
+remaining 59 students increased by 100g.*
+
+*What is the average weight of the remaining 59 students?*
+
+Solution:
+
+-   Let *a* be the average weight of the 59 students (after the 54 Kg
+    student left the class),
+-   The average weight of the 60 students will be equal to 59 times the
+    average of the 59 plus 54 Kg, all divided by 60, i.e. (59\*a+54)/60
+    ...
+-   ... which is told to be the same as the average weight of the 59
+    less 0.1 Kg.
+
+<!-- -->
+
+    function averweight()
+        for a in 1:50
+            if (59*a + 54)/60 == a - 0.1
+                println("The average weight of the 59 students is ", a, " Kg.")
+                println("The average weight of the 60 students was ", a-0.1, " Kg.")
+            end
+        end
+    end
+
+    > averweight()
+    The average weight of the 59 students is 60 Kg.
+    The average weight of the 60 students was 59.9 Kg.
+
+So, the total weight decreased 54 Kg, but the average weight increased
+from 59.9 to 60 Kg.
+
+*The Price of the Coat*
+=======================
+
+\_A man is paid Rs. 24000 plus one coat for one year service. However he
+left after 9 months and receives Rs. 15000 and a coat.
+
+*Then find the price of the coat.*
+
+Solution:
+
+-   Say *c* is the price of the coat;
+-   The man worked 3/4 of one year, he should receive Rs. 24000\*(3/4)+1
+    coat, i.e. Rs. 18000+1 coat;
+-   He actually received Rs 15000+1 coat.
+
+<!-- -->
+
+    function coatprice()
+        for c in 1:50000
+            if 3/4*(24000 + c) == 15000 + c
+                print("The price of the coat is Rs. ", c)
+            end
+        end
+    end
+
+    > coatprice()
+    The price of the coat is Rs. 12000
+
+*Holiday in Singapore*
+======================
+
+*Liza went to Singapore with her husband. It rained for 13 days. But
+when it rained in the morning, the afternoon was lovely. And when it
+rained in the afternoon, the day was preceded by clear morning.*
+
+*Altogether there were 11 very nice mornings and 12 very nice
+afternoons. How many days did their holiday last?*
+
+Let's assume the number of days as follows:
+
+-   Rain in the morning and clear afternoon as *A* days,
+-   Clear morning and rain in the afternoon as *M* days,
+-   No rain the whole day as *W* days,
+-   Number of days with rain is A+M = 13,
+-   Number of days with clear mornings is M+W = 11,
+-   Number of days with clear afternoons is A+W = 12,
+
+<!-- -->
+
+    function holiday()
+        for A in 1:50
+            for M in 1:50
+                for W in 1:50
+                    if A+M == 13 && M+W == 11 && A+W == 12
+                        println("Total days on holiday: ", A+M+W)
+                        println("Days with no rain: ", W)
+                        println("Days with morning rain: ", A)
+                        println("Days with afternoon rain: ", M)
+                    end
+                end
+            end
+        end
+    end
+
+    > holiday()
+    Total days on holiday: 18
+    Days with no rain: 5
+    Days with morning rain: 7
+    Days with afternoon rain: 6
+
+The total holiday was 18 days.
+
+*Eliza's Surname*
+=================
+
+*Smith, Brown and Robinson have provided themselves with a penny pencil
+each, and took their wives to a stockbroker's office to buy shares.*
+
+*Mary bought 50 more shares than Mister Brown, and Mister Robinson
+bought 120 more than Jane.*
+
+*Each man paid as many shillings per share as he bought shares, and each
+wife as many pence per share as she bought shares, and every man spent
+one guinea more than his wife.*
+
+*What was Eliza's surname?*
+
+*author: H. Dudeney*
+
+Solution (many steps):
+
+-   There are 12 pence per shilling, and 21 shillings per guinea. We are
+    told that *every man spent one guinea more than his wife*. Thus,
+    each man spends 21×12=252 pence more than his wife, but only 251
+    pence on shares because 1 penny was already spent buying the pencil;
+-   Now remember that *Each man paid as many shillings per share as he
+    bought shares, and each wife as many pence per share as she bought
+    shares*, i.e. the number of shares is always equal to the number of
+    shillings, *M* for the men, or pence, *W* for the women;
+-   Therefore the following equation must be true: 12x(MxM)=(WxW)+251
+
+<!-- -->
+
+    function sharespairs()
+        for M in 1:2000
+            for W in 1:2000
+                if 12*(M*M) == (W*W)+251
+                    println("M = ", M, "W = ", W)
+                end
+            end
+        end
+    end
+
+    > sharespairs()
+    M = 5; W = 7
+    M = 21; W = 71
+    M = 49; W = 169
+    M = 289; W = 1001
+
+-   Notice that we got pairs of results. Let's check these results;
+
+-   We are told that *Mary bought 50 more shares than Mister Brown*, and
+    the difference between 71 and 21 is exactly 50. So, this must be the
+    couple Mr. and Mrs. Brown;
+
+-   We are also told that *Mister Robinson bought 120 more than Jane*,
+    and the difference between 289 and 169 is exactly 120. However,
+    these values do not belong to the same pair/couple. So, Jane must be
+    Mrs. Smith and Mr. Smith bought 49 shares.
+
+-   So, Eliza can only be Mrs. Robinson. (This is the answer for the
+    puzzle.)
+
+-   The list of the couples and the shares they each bought:
+
+1.  Mr. Brown -\> 21, Mrs.Brown (Mary) -\> 71
+2.  Mr. Smith -\> 49, Mrs. Smith (Jane) -\> 169
+3.  Mr. Robinson -\> 289, Mrs. Robinson (Eliza) -\> 1001
+
+*Farmer Factor*
+===============
+
+*Farmer Factor (who lives at Fraction Farm) wants to stock up on feed
+for his three types of animals (chickens, pigs, cows).*
+
+*His goal is to spend all of the $100 and get exactly 100 bags
+altogether to fill up his cart.*
+
+*Naturally, each type of animal food is a different price. How does he
+spend his money?*
+
+*Puzzle author: Stephen Froggatt*
+
+Solution:
+
+-   Let *c* be the number of bags of chicken food, *p* the number of
+    bags of pig food and *C* the number of bags of cow food. Half of the
+    total number of bags of animal food is 50, so 0.5xc+0.5xp+0.5xC=50
+    bags;
+-   Taking the prices for each kind of food-bag and the total spent
+    being $100, then $5xc+$3xp+0.5xC=$100.
+
+<!-- -->
+
+    function foodbags()
+        for c in 1:100
+            for p in 1:100
+                for C in 1:100
+                    if 5c+3p+0.5C == 100 && 0.5c+0.5p+0.5C == 50
+                        println(c, " chicken food bags, amounting \$", 5c)
+                        println(p, " pig food bags, amounting \$", 3p)
+                        println(C, " cow food bags, amounting \$", Int(0.5C))
+                        println("Total bags: ", c, "+", p, "+", C, "=", c+p+C)
+                        println("Total price: ", 5c, "+", 3p, "+", Int(0.5C), "=\$", 5c+3p+0.5C)
+                        return
+                    end
+                end
+            end
+        end
+    end
+
+    > foodbags()
+    5 chicken food bags, amounting $25
+    11 pig food bags, amounting $33
+    84 cow food bags, amounting $42
+    Total bags: 5+11+84=100
+    Total price: 25+33+42=$100.0
+
+*Horses and Bullocks*
+=====================
+
+*A dealer bought a number of horses at £17, 4s. each, and a number of
+bullocks at £13, 5s. each.*
+
+*He then discovered that the horses had cost him in all 33s. more than
+the bullocks.*
+
+*Now, what is the smallest number of each he must have bought?*
+
+*author: H. Dudeney*
+
+Solution:
+
+-   First reduce the amounts to shillings: 20x17+4=344s for each horse
+    and 20x13+5=265s for each bullock;
+-   Next assign variables *H* to number of horses and *B* to the number
+    of bullocks;
+-   The indeterminate equation 344H = 265B + 33 must then be true.
+
+<!-- -->
+
+    function horsesandbulls()
+        for H in 1:500
+            for B in 1:500
+                if 344H == 265B+33
+                    println("He must have bought ", H, " horses,")
+                    println("and ", B, " bullocks.")
+                    println("The horses cost in total \$", 252*344)
+                    println("The bulls cost in total \$", 327*265)
+                    println("and the difference is \$", 252*344-327*265)
+                end
+            end
+        end
+    end
+
+    > horsesandbulls()
+    He must have bought 252 horses,
+    and 327 bullocks.
+    The horses cost in total $86688
+    The bulls cost in total $86655
+    and the difference is $33
+
+The smallest number of animals the dealer must have bought is 252 horses
+and 327 bullocks.
+
+*Buying Turkeys*
+================
+
+*A man bought a number of turkeys at a cost of £60, and after reserving
+fifteen of the birds he sold the remainder for £54, thus gaining 2s. a
+head by these.*
+
+*How many turkeys did he buy?*
+
+*author: H. Dudeney*
+
+Solution:
+
+-   £60 is equal to 1200 shillings, £54 is equal to 1080 shillings;
+-   Let the number of turkeys be *T*;
+-   Then, the buying price of one turkey was 1200/T, and its selling
+    price was (T-15)/1080;
+-   As the buying price was 2 shillings less than the selling price, the
+    following must be true: (1200/T)+2 = 1080/(T-15).
+
+<!-- -->
+
+    function turkeys()
+        for T in 1:200
+            if (1200/T)+2 == 1080/(T-15)
+                println("He bought ", T, " turkeys, at ", 1200/T, " shillings each.")
+                println("He sold ", T-15, " turkeys, at ", 1080/(T-15), " shillings each.")
+            end
+        end
+    end
+
+    > turkeys()
+    He bought 75 turkeys, at 16.0 shillings each.
+    He sold 60 turkeys, at 18.0 shillings each.
+
+The man bought 75 turkeys.
+
+*The Picnic*
+============
+
+*Four married couples had a picnic together, and their refreshments
+included thirty-two bottles of lemonade.*
+
+*Mary only disposed of one bottle, Anne had two, Jane swallowed the
+contents of three, and Elizabeth emptied four bottles.*
+
+*The husbands were more thirsty, except John MacGregor, who drank the
+same quantity as his better half.*
+
+*Lloyd Jones drank twice as much as his wife, William Smith three times
+as much as his wife, and Patrick Dolan four times as much as his wife
+demanded.*
+
+*The puzzle is to find the surnames of the ladies.*
+
+*Which man was married to which woman?*
+
+*author: H. Dudeney*
+
+Solution:
+
+-   Let *a, b, c* and *d* represent the bottles of lemonade each lady
+    drank;
+-   Therefore, a+b+c+d=10 bottles,
+-   and a+2b+3c+4d=22 is the number of bottles their husbands drank.
+
+<!-- -->
+
+    function lemonades()
+        for a in 1:4
+            for b in 1:4
+                for c in 1:4
+                    for d in 1:4
+                        if a+b+c+d == 10 && a+2b+3c+4d == 22 && a!=b && a!=c && a!=d && b!=c && b!=d && c!=d
+                            println("Jane and John drank ", a, " lemonades each")
+                            println("Elizabeth drank ", b, " and Lloyd ", 2b)
+                            println("Mary drank ", c, " and William ", 3c)
+                            println("Anne drank ", d, " and Patrick ", 4d)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    > lemonades()
+    Jane and John drank 3 lemonades each
+    Elizabeth drank 4 and Lloyd 8
+    Mary drank 1 and William 3
+    Anne drank 2 and Patrick 8
+
+The answer for the puzzle:
+
+-   John MacGregor was married to Jane.
+-   Lloyd Jones was married to Elizabeth.
+-   William Smith was marries to Mary.
+-   Patrick Dolan was marries to Anne.
+
+*Puzzling Legacies*
+===================
+
+*A man bequeathed a sum of money, a little less than £1,500, to be
+divided as follows:*
+
+*The five children and the lawyer received such sums that the square
+root of the eldest son's share, the second son's share divided by two,
+the third son's share plus £2, the fourth son's share minus £2, the
+daughter's share multiplied by 2, and the square of the lawyer's fee all
+worked out to at exactly the same sum of money.*
+
+*No pounds were divided, and no money was left over after the division.
+What was the total amount bequeathed?*
+
+*author: H. Dudeney*
+
+Solution:
+
+-   Say that the amounts to be received were *E* by the eldest son, *S*
+    by the second son, and *L* by the lawyer;
+-   It is said that *the square root of the eldest son's share* is equal
+    to *the second son's share divided by two*, i.e. sqrt(E)=S/2;
+-   It is also said that *the second son's share divided by two* is
+    equal to *the square of the lawyer's fee*, i.e. S/2=L\^2 which is
+    the same as S=2\*(L\^2);
+-   All the other values can be extrapolated from these.
+
+<!-- -->
+
+    function dividelegacy()
+        println("The bequeathed money was divided the following way:")
+        for E in 1000:1500
+            for S in 10:100
+                for L in 1:50
+                    if sqrt(E) == S/2 && S == 2*(L^2)
+                        println("Eldest son, £", E)
+                        println("Second son, £", S)
+                        println("Third son, £", L^2+2)
+                        println("Fourth son, £", L^2-2)
+                        println("Daughter, £", floor(Int, S/4))
+                        println("Lawyer, £", L, "\n")
+                        println("And the total was £", E+S+(L^2+2)+(L^2-2)+floor(Int,S/4)+L)
+                    end
+                end
+            end
+        end
+    end
+
+    > dividelegacy()
+    The bequeathed money was divided the following way:
+    Eldest son, £1296
+    Second son, £72
+    Third son, £38
+    Fourth son, £34
+    Daughter, £18
+    Lawyer, £6
+
+    And the total was £1464
+
+The answer for the puzzle: The total amount bequeathed was £1464.
+
+*Biblio and Webography*
+=======================
+
+------------------------------------------------------------------------
+
+-   Asimov, Isaac, *Asimov on Numbers*, Pocket Books, N.Y., 1978
+-   Straszewicz, S., Mathematical Problems and Puzzles, Pergamon Press,
+    Ltd. & Polish Scientific Publishers, Warszawa, 1965
+-   Dudeney, H. E., Puzzles and Curious Problems, Thomas Nelson and
+    Sons, Ltd., London, 1932(?)
+
+------------------------------------------------------------------------
+
+-   [Math and Logic Puzzles](https://www.mathsisfun.com/puzzles/)
+-   [List of Mathematical Puzzles](https://www.hitbullseye.com/Puzzles)
