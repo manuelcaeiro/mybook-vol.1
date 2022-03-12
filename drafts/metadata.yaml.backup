@@ -1,0 +1,23 @@
+
+---
+title:
+- type: cover
+  cover-image: cover.jpg
+- type: main
+  text: 50 Math Puzzles
+- type: subtitle
+  text: Solved using functional Julia
+creator:
+- role: author
+  text: Ace Alumni Ore
+- role: editor
+  text: self-published
+date: 2022-03-08
+rights: © 2022 J. Manuel Caeiro D. P.
+identifier: github.com/manuelcaeiro/mybook-vol.1
+description: The fun of solving math puzzles with Julia
+toc-title: The Puzzles
+lang: en-GB
+css: pandoc.css
+cover-image: cover.jpg
+---
