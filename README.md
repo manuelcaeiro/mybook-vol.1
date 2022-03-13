@@ -14,6 +14,12 @@
 ## intro
 ![book cover](pics/intro.png)
 
+## sample puzzle
+<p float="left">
+  <img src="/pics/puzzle1-1.png" width="400" />
+  <img src="/pics/puzzle1-2.png" width="400" />
+</p>
+
 # License
 Copyright [2022] [J. Manuel Caeiro D. P.]
 
