@@ -4,6 +4,13 @@
 ## book cover
 ![book cover](pics/coverpic.jpg)
 
+## table of contents
+<p float="left">
+  <img src="/pics/toc1.png" width="270" />
+  <img src="/pics/toc2.png" width="370" /> 
+  <img src="/pics/toc3.png" width="310" />
+</p>
+
 # License
 Copyright [2022] [J. Manuel Caeiro D. P.]
 
