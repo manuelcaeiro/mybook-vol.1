@@ -11,6 +11,9 @@
   <img src="/pics/toc3.png" width="310" />
 </p>
 
+## intro
+![book cover](pics/intro.png)
+
 # License
 Copyright [2022] [J. Manuel Caeiro D. P.]
 
