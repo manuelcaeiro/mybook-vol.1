@@ -17,7 +17,7 @@
 ## sample puzzle
 <p float="left">
   <img src="/pics/puzzle1-1.png" width="400" />
-  <img src="/pics/puzzle1-2.png" width="400" />
+  <img src="/pics/puzzle1-2a.png" width="450" />
 </p>
 
 # License
