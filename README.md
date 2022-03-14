@@ -20,6 +20,17 @@
   <img src="/pics/puzzle1-2c.png" width="400" />
 </p>
 
+## get the book
+Liked the preview? Want the book? Simple.
+
+For a small donation of 3 EUR - or 4 USD, or 3 GBP, or or 5 AUD, or 5 CAD, or ... - I'll send you a beautiful epub file you can read (and play with) on your pc, tablet, or smartphone.
+
+Email me to: manuelcaeiro[at]workmail[dot]com
+
+P.S.: Larger donations will also be accepted. :)
+
+P.S.2: The ebook is planned also to be for sale soon at Leanpub. (I'll give you notice of it here.)
+
 # License
 Copyright [2022] [J. Manuel Caeiro D. P.]
 
