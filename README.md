@@ -25,7 +25,7 @@ Liked the preview? Want the book? Simple.
 
 <s>For a small donation of 3 EUR - or 4 USD, or 3 GBP, or 5 AUD, or 5 CAD, or ... - I'll send you a beautiful epub file you can read (and play with) on your pc, tablet, or smartphone.</s>
 
-The ebook now fully revised is for sale at [this address](https://leanpub.com/50mathpuzzles-solvedusingfunctionaljulia).
+The ebook now fully revised is available at [this address](https://leanpub.com/50mathpuzzles-solvedusingfunctionaljulia).
 
 # License
 Copyright [2022] [J. Manuel Caeiro D. P.]
